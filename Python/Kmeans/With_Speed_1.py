@@ -443,6 +443,7 @@ if __name__ == '__main__':
     print(port)
 
     port_name = "/dev/" + port[0]
+    #port_name = "/dev/ttyUSB0"
     print(port_name)
     ser = serial.Serial( port_name, 9600, timeout=1)
     ser.reset_input_buffer()

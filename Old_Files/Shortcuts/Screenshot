@@ -1,0 +1,8 @@
+Screen Shot - https://www.instructables.com/id/Raspberry-Pi-Screenshots/
+scrot
+scrot /home/pi/Dekstop/example.png
+
+**To sppecify the particular selection {-s} time {-cd}**
+scrot -cd 10 /home/pi/Desktop/screenshot.png -s
+
+----------------------------------------

@@ -1,0 +1,431 @@
+[
+    {
+        "id": "beefa4fa.78af98",
+        "type": "tab",
+        "label": "Functions Test",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "2d32a1be.58811e",
+        "type": "inject",
+        "z": "beefa4fa.78af98",
+        "name": "",
+        "topic": "test",
+        "payload": "test",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 90,
+        "y": 80,
+        "wires": [
+            [
+                "e979c896.08f278"
+            ]
+        ]
+    },
+    {
+        "id": "e979c896.08f278",
+        "type": "function",
+        "z": "beefa4fa.78af98",
+        "name": "uppercase",
+        "func": "var payload = msg.payload;//get payload\nmsg.payload = payload.toUpperCase();//convert to UC\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 250,
+        "y": 80,
+        "wires": [
+            [
+                "ccc178e1.e597d8"
+            ]
+        ]
+    },
+    {
+        "id": "ccc178e1.e597d8",
+        "type": "debug",
+        "z": "beefa4fa.78af98",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 430,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "39338e41.1c1b82",
+        "type": "function",
+        "z": "beefa4fa.78af98",
+        "name": "",
+        "func": "var topic = msg.topic;\nif (topic == \"emspe/test1\"){\n    return[msg,null];\n}\nif (topic==\"emspe/test2\"){\n        return[null,msg];\n}\nreturn msg;",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 290,
+        "y": 160,
+        "wires": [
+            [
+                "43ee110f.dad1c"
+            ],
+            [
+                "dc02164f.b71548"
+            ]
+        ]
+    },
+    {
+        "id": "ca2bfbca.3abc38",
+        "type": "inject",
+        "z": "beefa4fa.78af98",
+        "name": "",
+        "topic": "emspe/test1",
+        "payload": "test1",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 90,
+        "y": 140,
+        "wires": [
+            [
+                "39338e41.1c1b82"
+            ]
+        ]
+    },
+    {
+        "id": "41268c90.312d54",
+        "type": "inject",
+        "z": "beefa4fa.78af98",
+        "name": "",
+        "topic": "emspe/test2",
+        "payload": "",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 110,
+        "y": 180,
+        "wires": [
+            [
+                "39338e41.1c1b82"
+            ]
+        ]
+    },
+    {
+        "id": "43ee110f.dad1c",
+        "type": "debug",
+        "z": "beefa4fa.78af98",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 450,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "dc02164f.b71548",
+        "type": "debug",
+        "z": "beefa4fa.78af98",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 450,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "e5a4de95.1aeed",
+        "type": "inject",
+        "z": "beefa4fa.78af98",
+        "name": "",
+        "topic": "test",
+        "payload": "1",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "1",
+        "x": 110,
+        "y": 240,
+        "wires": [
+            [
+                "90f81c4b.eb9e7"
+            ]
+        ]
+    },
+    {
+        "id": "90f81c4b.eb9e7",
+        "type": "function",
+        "z": "beefa4fa.78af98",
+        "name": "MSG ARRAY",
+        "func": "var m_out=[];//array for msg objects\n\nvar message = msg.payload;\nfor (i=0;i<6;i++){\n    message = message + i;//add count to msg\n    var newmsg = {payload:message}\n    m_out.push(newmsg);\n}\n//node.send(message);\nreturn [m_out];",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 250,
+        "y": 240,
+        "wires": [
+            [
+                "6954af78.ba9fd"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "6954af78.ba9fd",
+        "type": "debug",
+        "z": "beefa4fa.78af98",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 430,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "d84abb80.6ae658",
+        "type": "function",
+        "z": "beefa4fa.78af98",
+        "name": "Multi outputs ",
+        "func": "var msg1 = {payload : \"output1\"};\nvar msg2 = {payload:\"output2\"};\nvar msg3 = {payload:\"output3\"};\nreturn [msg1,msg2];",
+        "outputs": 3,
+        "noerr": 0,
+        "x": 270,
+        "y": 280,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "31a7d824.b4d288",
+        "type": "debug",
+        "z": "beefa4fa.78af98",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 450,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "819177b9.76d938",
+        "type": "inject",
+        "z": "beefa4fa.78af98",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 100,
+        "y": 300,
+        "wires": [
+            [
+                "d84abb80.6ae658"
+            ]
+        ]
+    },
+    {
+        "id": "732c5177.ca35c",
+        "type": "function",
+        "z": "beefa4fa.78af98",
+        "name": "Multi outputs ",
+        "func": "var new1 =[];\nvar words =msg.payload.split(\" \");\nfor (var w in words){\n    new1.push({payload:words[w]});\n}\nreturn ([new1]);\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 290,
+        "y": 380,
+        "wires": [
+            [
+                "6fc9a9e5.020328"
+            ]
+        ]
+    },
+    {
+        "id": "6fc9a9e5.020328",
+        "type": "debug",
+        "z": "beefa4fa.78af98",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 450,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "83cf2334.c1fe8",
+        "type": "inject",
+        "z": "beefa4fa.78af98",
+        "name": "",
+        "topic": "",
+        "payload": "get ht gt ht hk ree",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 110,
+        "y": 380,
+        "wires": [
+            [
+                "732c5177.ca35c"
+            ]
+        ]
+    },
+    {
+        "id": "ad0a0fa6.a3da5",
+        "type": "function",
+        "z": "beefa4fa.78af98",
+        "name": "Multi outputs ",
+        "func": "var new1 =[];\nvar words =msg.payload.split(\" \");\nfor (var w in words){\n    new1.push({payload:words[w]});\n}\nreturn ([new1]);\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 290,
+        "y": 480,
+        "wires": [
+            [
+                "4fb8de92.43f9c"
+            ]
+        ]
+    },
+    {
+        "id": "4fb8de92.43f9c",
+        "type": "debug",
+        "z": "beefa4fa.78af98",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 430,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "a45d442e.9439b8",
+        "type": "inject",
+        "z": "beefa4fa.78af98",
+        "name": "",
+        "topic": "",
+        "payload": "get ht gt ht hk ree",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 90,
+        "y": 480,
+        "wires": [
+            [
+                "ad0a0fa6.a3da5"
+            ]
+        ]
+    },
+    {
+        "id": "c53f8945.937cc8",
+        "type": "inject",
+        "z": "beefa4fa.78af98",
+        "name": "TIME DATE (now)",
+        "topic": "",
+        "payload": "",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 130,
+        "y": 560,
+        "wires": [
+            [
+                "af33362b.e66ba8"
+            ]
+        ]
+    },
+    {
+        "id": "af33362b.e66ba8",
+        "type": "function",
+        "z": "beefa4fa.78af98",
+        "name": "TIME DATE now",
+        "func": "var date = Date(Date.now());\ndatestring = date.toString();\n msg.payload = datestring;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 330,
+        "y": 560,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8def446e.2f4658",
+        "type": "function",
+        "z": "beefa4fa.78af98",
+        "name": "Multi outputs ",
+        "func": "\n//node.log(\"something\");\n//node.warn(\"warn\");\nnode.error(\"error\",msg);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 250,
+        "y": 620,
+        "wires": [
+            [
+                "cadf16d5.a7d2a8"
+            ]
+        ]
+    },
+    {
+        "id": "cadf16d5.a7d2a8",
+        "type": "debug",
+        "z": "beefa4fa.78af98",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 410,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "577a2eaa.a224e",
+        "type": "inject",
+        "z": "beefa4fa.78af98",
+        "name": "",
+        "topic": "",
+        "payload": "mmssgg",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 120,
+        "y": 620,
+        "wires": [
+            [
+                "8def446e.2f4658"
+            ]
+        ]
+    }
+]

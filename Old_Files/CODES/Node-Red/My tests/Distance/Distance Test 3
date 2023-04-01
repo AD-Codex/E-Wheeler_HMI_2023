@@ -1,0 +1,681 @@
+[
+    {
+        "id": "9f870fda.94bda",
+        "type": "tab",
+        "label": "Dist2",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "13b35125.135f3f",
+        "type": "worldmap",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "lat": "",
+        "lon": "",
+        "zoom": "10",
+        "layer": "OSM",
+        "cluster": "0",
+        "maxage": "",
+        "usermenu": "show",
+        "layers": "hide",
+        "panit": "true",
+        "panlock": "false",
+        "zoomlock": "false",
+        "path": "/worldmap",
+        "x": 1240,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "eac8f184.54691",
+        "type": "file in",
+        "z": "9f870fda.94bda",
+        "name": "Vehicle1",
+        "filename": "/home/pi/Desktop/Project/Node-red/Vehicle1_gpxdata_sample.txt",
+        "format": "lines",
+        "chunk": false,
+        "sendError": false,
+        "x": 860,
+        "y": 120,
+        "wires": [
+            [
+                "6b8f7737.6301e8",
+                "cf9a8b20.19b4e8",
+                "c76a4e0e.27b68"
+            ]
+        ]
+    },
+    {
+        "id": "697d66bc.0680c8",
+        "type": "inject",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.1",
+        "x": 810,
+        "y": 60,
+        "wires": [
+            [
+                "eac8f184.54691"
+            ]
+        ]
+    },
+    {
+        "id": "2c64e81b.a269e8",
+        "type": "debug",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1230,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "6b8f7737.6301e8",
+        "type": "function",
+        "z": "9f870fda.94bda",
+        "name": "Split > Update object",
+        "func": "var lat1 = msg.payload.split(',')[0];\n//node.warn(lon1)\nvar lon1= msg.payload.split(',')[1];\n//node.warn(lat1)\n\nvar lat = lat1;\nvar lon = lon1;\n\nvar v1 = {\n    lon:lon, \n    lat:lat,\n    name:\"eWheeler 1\", \n    icon:\"fa-car\"\n};\n\nmsg.payload= v1;\n\nvar lat_d = {payload:lat};\nvar lon_d = {payload:lon};\nreturn [msg,lat_d,lon_d];\n",
+        "outputs": 3,
+        "noerr": 0,
+        "x": 880,
+        "y": 180,
+        "wires": [
+            [
+                "3718cc4a.0807a4"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "cf9a8b20.19b4e8",
+        "type": "debug",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1110,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "3718cc4a.0807a4",
+        "type": "delay",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "2",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 1080,
+        "y": 200,
+        "wires": [
+            [
+                "2c64e81b.a269e8",
+                "13b35125.135f3f"
+            ]
+        ]
+    },
+    {
+        "id": "99f21098.bd013",
+        "type": "comment",
+        "z": "9f870fda.94bda",
+        "name": "Journey",
+        "info": "",
+        "x": 800,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "89600323.cb5a1",
+        "type": "switch",
+        "z": "9f870fda.94bda",
+        "name": "check",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1410,
+        "y": 140,
+        "wires": [
+            [
+                "2b97dc46.e76be4",
+                "14b7a920.f5db97"
+            ],
+            [
+                "c4e93c8b.78e59"
+            ]
+        ]
+    },
+    {
+        "id": "8366a542.c5dc78",
+        "type": "function",
+        "z": "9f870fda.94bda",
+        "name": "SS1-dist",
+        "func": "// -- Obtain lon/lat of vehicle\nvar lat_now = msg.payload.split(',')[0];\n//node.warn(lon1)\nvar lon_now= msg.payload.split(',')[1];\n//node.warn(lat1)\nvar lat_v = lat_now;\nvar lon_v = lon_now;\n\nfunction getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {\n  var R = 6371; // Radius of the earth in km\n  var dLat = deg2rad(lat2-lat1);  // deg2rad below\n  var dLon = deg2rad(lon2-lon1); \n  var a = \n    Math.sin(dLat/2) * Math.sin(dLat/2) +\n    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * \n    Math.sin(dLon/2) * Math.sin(dLon/2)\n    ; \n  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); \n  var d = R * c; // Distance in km\n  return d;\n}\n\nfunction deg2rad(deg) {\n  return deg * (Math.PI/180)\n}\n\nvar SS1_dis= {payload : getDistanceFromLatLonInKm(7.486944,80.365045,lat_v,lon_v)}\nvar SS2_dis= {payload : getDistanceFromLatLonInKm(7.473803,80.390385,lat_v,lon_v)}\n\n\n  \nreturn [SS1_dis, SS2_dis];",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 1240,
+        "y": 140,
+        "wires": [
+            [
+                "89600323.cb5a1",
+                "a08a6fd9.ea403"
+            ],
+            [
+                "423ffe9f.b1fdc",
+                "48b6c412.3e411c"
+            ]
+        ]
+    },
+    {
+        "id": "a08a6fd9.ea403",
+        "type": "debug",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "x": 1410,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "2b97dc46.e76be4",
+        "type": "debug",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1550,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "14b7a920.f5db97",
+        "type": "function",
+        "z": "9f870fda.94bda",
+        "name": "publish 1",
+        "func": "var value = 1;\nmsg.payload = value;\nmsg.topic =\"dist/v1/SS1\";\nreturn msg ;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1560,
+        "y": 140,
+        "wires": [
+            [
+                "81e81c11.e2add",
+                "3b464a9e.4d37c6"
+            ]
+        ]
+    },
+    {
+        "id": "81e81c11.e2add",
+        "type": "debug",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1670,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "3b464a9e.4d37c6",
+        "type": "mqtt out",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "broker": "62b11e8.bc166e",
+        "x": 1870,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "48b6c412.3e411c",
+        "type": "switch",
+        "z": "9f870fda.94bda",
+        "name": "check",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1410,
+        "y": 180,
+        "wires": [
+            [
+                "48280bed.fa79b4",
+                "1d087d2.0012583"
+            ],
+            [
+                "9aaa9a2.2466368"
+            ]
+        ]
+    },
+    {
+        "id": "48280bed.fa79b4",
+        "type": "debug",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1570,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "1d087d2.0012583",
+        "type": "function",
+        "z": "9f870fda.94bda",
+        "name": "publish 1",
+        "func": "var value = 1;\nmsg.payload = value;\nmsg.topic =\"dist/v1/SS2\";\nreturn msg ;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1560,
+        "y": 200,
+        "wires": [
+            [
+                "fbd3cb6d.757bc8",
+                "3b464a9e.4d37c6"
+            ]
+        ]
+    },
+    {
+        "id": "fbd3cb6d.757bc8",
+        "type": "debug",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1770,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "423ffe9f.b1fdc",
+        "type": "debug",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "x": 1430,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "c76a4e0e.27b68",
+        "type": "delay",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "2",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 1080,
+        "y": 140,
+        "wires": [
+            [
+                "8366a542.c5dc78"
+            ]
+        ]
+    },
+    {
+        "id": "1949e8eb.af4867",
+        "type": "mqtt in",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "topic": "dist/v1/#",
+        "qos": "0",
+        "broker": "62b11e8.bc166e",
+        "x": 1440,
+        "y": 520,
+        "wires": [
+            [
+                "9c4c0290.7512",
+                "e145dadf.8e0478"
+            ]
+        ]
+    },
+    {
+        "id": "9c4c0290.7512",
+        "type": "debug",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 1570,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "e145dadf.8e0478",
+        "type": "switch",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "SS1",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "SS2",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1590,
+        "y": 520,
+        "wires": [
+            [
+                "bb66dad5.130558",
+                "dab92d0a.32fa6"
+            ],
+            [
+                "8829cdba.9edd2",
+                "8fc7f484.706918"
+            ]
+        ]
+    },
+    {
+        "id": "dab92d0a.32fa6",
+        "type": "ui_text",
+        "z": "9f870fda.94bda",
+        "group": "9b3e09e5.494328",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "SS1",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 1750,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "bb66dad5.130558",
+        "type": "debug",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 1750,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "8829cdba.9edd2",
+        "type": "debug",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 1670,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "88108c98.7710f",
+        "type": "switch",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "null"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1830,
+        "y": 620,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "ab458579.a22958",
+        "type": "switch",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1730,
+        "y": 480,
+        "wires": [
+            [
+                "2eafc949.7cb0a6"
+            ],
+            [
+                "8f521f6.9696ce"
+            ]
+        ]
+    },
+    {
+        "id": "8f521f6.9696ce",
+        "type": "function",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "func": "msg.payload=0;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1890,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8fc7f484.706918",
+        "type": "ui_text",
+        "z": "9f870fda.94bda",
+        "group": "9b3e09e5.494328",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "SS2",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 1750,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "2eafc949.7cb0a6",
+        "type": "function",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "func": "msg.payload = 1;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1890,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c4e93c8b.78e59",
+        "type": "function",
+        "z": "9f870fda.94bda",
+        "name": "publish 1",
+        "func": "var value = 0;\nmsg.payload = value;\nmsg.topic =\"dist/v1/SS1\";\nreturn msg ;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1560,
+        "y": 160,
+        "wires": [
+            [
+                "3b464a9e.4d37c6"
+            ]
+        ]
+    },
+    {
+        "id": "9aaa9a2.2466368",
+        "type": "function",
+        "z": "9f870fda.94bda",
+        "name": "publish 1",
+        "func": "var value = 0;\nmsg.payload = value;\nmsg.topic =\"dist/v1/SS2\";\nreturn msg ;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1560,
+        "y": 220,
+        "wires": [
+            [
+                "3b464a9e.4d37c6"
+            ]
+        ]
+    },
+    {
+        "id": "39732a95.5d54d6",
+        "type": "comment",
+        "z": "9f870fda.94bda",
+        "name": "Subscriber",
+        "info": "",
+        "x": 1360,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "62b11e8.bc166e",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "",
+        "broker": "test.mosquitto.org",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "9b3e09e5.494328",
+        "type": "ui_group",
+        "z": "",
+        "name": "Default",
+        "tab": "80af9b48.5e8f28",
+        "disp": true,
+        "width": "21",
+        "collapse": false
+    },
+    {
+        "id": "80af9b48.5e8f28",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Home",
+        "icon": "dashboard"
+    }
+]

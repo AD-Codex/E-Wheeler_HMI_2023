@@ -1,0 +1,130 @@
+[
+    {
+        "id": "d9685a6e.5b7a98",
+        "type": "tab",
+        "label": "keep map locations",
+        "disabled": false,
+        "info": "this will keep the pre given locations even with the refresh.\nwill correctly work with \"location icon color change \" flow"
+    },
+    {
+        "id": "77ff66e4.a90408",
+        "type": "function",
+        "z": "d9685a6e.5b7a98",
+        "name": "Add SS1",
+        "func": "var SS1  =  {\n    name:\"SS1 : Kurunegala\", \n    lat:7.486944, \n    lon:80.365045,\n    icon:\"tag\",\n    iconColor:\"dark\",\n    extrainfo:\"Hello ! this is station 1\"\n};\nmsg.payload = SS1;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 340,
+        "y": 180,
+        "wires": [
+            [
+                "a470cfce.83e5f",
+                "450fdbe4.dfac04"
+            ]
+        ]
+    },
+    {
+        "id": "20a71b20.1f9e64",
+        "type": "worldmap in",
+        "z": "d9685a6e.5b7a98",
+        "name": "",
+        "path": "/worldmap",
+        "x": 80,
+        "y": 180,
+        "wires": [
+            [
+                "c694233f.916a4",
+                "5127fc45.5f0cb4"
+            ]
+        ]
+    },
+    {
+        "id": "c694233f.916a4",
+        "type": "switch",
+        "z": "d9685a6e.5b7a98",
+        "name": "",
+        "property": "payload.action",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "connected",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 210,
+        "y": 180,
+        "wires": [
+            [
+                "77ff66e4.a90408",
+                "55a3b33f.81cdec"
+            ]
+        ]
+    },
+    {
+        "id": "a470cfce.83e5f",
+        "type": "worldmap",
+        "z": "d9685a6e.5b7a98",
+        "name": "",
+        "lat": "",
+        "lon": "",
+        "zoom": "",
+        "layer": "",
+        "cluster": "",
+        "maxage": "",
+        "usermenu": "show",
+        "layers": "show",
+        "panit": "false",
+        "panlock": "false",
+        "zoomlock": "false",
+        "path": "/worldmap",
+        "x": 520,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "5127fc45.5f0cb4",
+        "type": "debug",
+        "z": "d9685a6e.5b7a98",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 210,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "55a3b33f.81cdec",
+        "type": "debug",
+        "z": "d9685a6e.5b7a98",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 390,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "450fdbe4.dfac04",
+        "type": "debug",
+        "z": "d9685a6e.5b7a98",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 430,
+        "y": 80,
+        "wires": []
+    }
+]

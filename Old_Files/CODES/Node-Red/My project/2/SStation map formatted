@@ -1,0 +1,19 @@
+[
+    {
+        "id": "1d459f5a.3eb681",
+        "type": "function",
+        "z": "f4354178.6fbf5",
+        "name": "Add SS1",
+        "func": "\nvar SS1 = {\n    name:\"SS1 : Kurunegala\", \n    lat:7.486944, \n    lon:80.365045,\n    icon:\"tag\",\n    iconColor:\"blue\",\n    extrainfo:\"Hello ! this is station 1\"\n};\nmsg.payload = SS1;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 240,
+        "y": 140,
+        "wires": [
+            [
+                "f28ab0c6.6d4b",
+                "70d151f1.c7879"
+            ]
+        ]
+    }
+]

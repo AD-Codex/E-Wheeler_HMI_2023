@@ -1,0 +1,761 @@
+[
+    {
+        "id": "9f870fda.94bda",
+        "type": "tab",
+        "label": "SS Status Subscriber_Dist1",
+        "disabled": false,
+        "info": "This is testing codes and different approaches. "
+    },
+    {
+        "id": "ce2887dd.1ab598",
+        "type": "debug",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 250,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "99f6e10e.e415",
+        "type": "debug",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 470,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "9f33a960.938d68",
+        "type": "debug",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 470,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "1dc78bd2.d1d034",
+        "type": "function",
+        "z": "9f870fda.94bda",
+        "name": "ON",
+        "func": "var ss = msg.topic.split('/')[3];\nnode.warn(ss)\nvar SS = global.get(ss);\nSS.iconColor=\"green\";\nSS.icon =\"check\";\nmsg.payload = SS;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 450,
+        "y": 120,
+        "wires": [
+            [
+                "f8213fbf.c2bf5",
+                "13b35125.135f3f"
+            ]
+        ]
+    },
+    {
+        "id": "3e722884.1145c8",
+        "type": "function",
+        "z": "9f870fda.94bda",
+        "name": "OFF",
+        "func": "var ss = msg.topic.split('/')[3];\nnode.warn(ss)\nvar SS = global.get(ss);\nSS.iconColor=\"red\";\nSS.icon =\"close\";\nmsg.payload = SS;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 450,
+        "y": 160,
+        "wires": [
+            [
+                "9fd240bd.15d4b",
+                "13b35125.135f3f"
+            ]
+        ]
+    },
+    {
+        "id": "12e739d9.78ee96",
+        "type": "switch",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "true",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "false",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": true,
+        "outputs": 2,
+        "x": 270,
+        "y": 120,
+        "wires": [
+            [
+                "99f6e10e.e415",
+                "1dc78bd2.d1d034"
+            ],
+            [
+                "9f33a960.938d68",
+                "3e722884.1145c8"
+            ]
+        ]
+    },
+    {
+        "id": "f8213fbf.c2bf5",
+        "type": "debug",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 570,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "9fd240bd.15d4b",
+        "type": "debug",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 570,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "f6694f3a.355a6",
+        "type": "function",
+        "z": "9f870fda.94bda",
+        "name": "Add SS (1:6)",
+        "func": "var SS1  =  {\n    name:\"SS1 : Kurunegala\", \n    lat:7.486944, \n    lon:80.365045,\n    icon:\"tag\",\n    iconColor:\"blue\",\n    extrainfo:\"Hello ! this is station 1\"\n};\nglobal.set(\"SS1\",SS1);\n\nvar SS2  =  {\n    name:\"SS2 : Mallawapitiya\", \n    lat:7.473803,\t\n    lon:80.390385,\n    icon:\"tag\",\n    extrainfo:\"Hello ! this is station 2\",\n    iconColor:\"blue\"\n};\nglobal.set(\"SS2\",SS2);\n\nvar SS3 = {\n    name:\"SS3 : Pilessa\", \n    lat:7.453491,\t\n    lon:80.418123,\n    icon:\"tag\",\n    iconColor:\"blue\",\n    extrainfo:\"Hello ! this is station 3\"\n};\nglobal.set(\"SS3\",SS3);\n\t\nvar SS4 = {\n    name:\"SS4 : Mawatagama\", \n    lat:7.432725,\t\n    lon:80.446576,\n    icon:\"tag\",\n    iconColor:\"blue\",\n    extrainfo:\"Hello ! this is station 4\"\n};\nglobal.set(\"SS4\",SS4);\n\t\nvar SS5 = {\n    name:\"SS5 : Galagedara\", \n    lat:7.372298,\t\n    lon:80.526042,\n    icon:\"tag\",\n    iconColor:\"blue\",\n    extrainfo:\"Hello ! this is station 5\"\n};\nglobal.set(\"SS5\",SS5);\n\t\nvar SS6 = {\n    name:\"SS6 : Barigama\", \n    lat:7.327693,\t\n    lon:80.577552,\n    icon:\"tag\",\n    iconColor:\"blue\",\n    extrainfo:\"Hello ! this is station 6\"\n};\nglobal.set(\"SS6\",SS6);\n\nvar msg1= {payload : [SS1,SS2,SS3,SS4,SS5,SS6]};\n\nvar msg2 = {payload : SS1.lon};\n\n\n//create global array\n//global.set(\"ss\",[SS1,SS2,SS3,SS4,SS5,SS6]);//array for msg objects\n//var ss_g=global.get(\"ss\");\n\n/**\nvar message = msg.payload;\nfor (i=0;i<6;i++){\n    message = message + i;//add count to msg\n    var newmsg = {payload:message}\n    m_out.push(newmsg);\n}\n//node.send(message);\nreturn [m_out];\n**/\nreturn [msg1,msg2]\n\n\n",
+        "outputs": 3,
+        "noerr": 0,
+        "x": 390,
+        "y": 280,
+        "wires": [
+            [
+                "aa9000a9.778f",
+                "13b35125.135f3f",
+                "67f0dcb7.3aec84",
+                "d7e6ba4f.59be58"
+            ],
+            [
+                "93b6dc2d.8b301"
+            ],
+            [
+                "6eedc41.856b83c"
+            ]
+        ]
+    },
+    {
+        "id": "f9ad6e67.9b904",
+        "type": "worldmap in",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "path": "/worldmap",
+        "x": 115,
+        "y": 298,
+        "wires": [
+            [
+                "532011.530faff"
+            ]
+        ]
+    },
+    {
+        "id": "532011.530faff",
+        "type": "switch",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "property": "payload.action",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "connected",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 250,
+        "y": 300,
+        "wires": [
+            [
+                "f6694f3a.355a6"
+            ]
+        ]
+    },
+    {
+        "id": "aa9000a9.778f",
+        "type": "debug",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 670,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "13b35125.135f3f",
+        "type": "worldmap",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "lat": "",
+        "lon": "",
+        "zoom": "10",
+        "layer": "OSM",
+        "cluster": "0",
+        "maxage": "",
+        "usermenu": "show",
+        "layers": "hide",
+        "panit": "true",
+        "panlock": "false",
+        "zoomlock": "false",
+        "path": "/worldmap",
+        "x": 580,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "35fd809b.baadd",
+        "type": "comment",
+        "z": "9f870fda.94bda",
+        "name": "Vehicle 1 Subscriber",
+        "info": "",
+        "x": 130,
+        "y": 54,
+        "wires": []
+    },
+    {
+        "id": "eac8f184.54691",
+        "type": "file in",
+        "z": "9f870fda.94bda",
+        "name": "Vehicle1",
+        "filename": "/home/pi/Desktop/Project/Node-red/Vehicle1_gpxdata.txt",
+        "format": "lines",
+        "chunk": false,
+        "sendError": false,
+        "x": 860,
+        "y": 120,
+        "wires": [
+            [
+                "6b8f7737.6301e8",
+                "cf9a8b20.19b4e8"
+            ]
+        ]
+    },
+    {
+        "id": "697d66bc.0680c8",
+        "type": "inject",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.1",
+        "x": 810,
+        "y": 60,
+        "wires": [
+            [
+                "eac8f184.54691"
+            ]
+        ]
+    },
+    {
+        "id": "2c64e81b.a269e8",
+        "type": "debug",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1010,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "6b8f7737.6301e8",
+        "type": "function",
+        "z": "9f870fda.94bda",
+        "name": "Split > Update object",
+        "func": "var lat1 = msg.payload.split(',')[0];\n//node.warn(lon1)\nvar lon1= msg.payload.split(',')[1];\n//node.warn(lat1)\n\nvar lat = lat1;\nvar lon = lon1;\n\nvar v1 = {\n    lon:lon, \n    lat:lat,\n    name:\"eWheeler 1\", \n    icon:\"fa-car\"\n};\n\nmsg.payload= v1;\n\n//distance calculator\n/**\nvar ss =[];//array for msg objects\n\nvar message = msg.payload;\nfor (i=0;i<6;i++){\n    message = message + i;//add count to msg\n    var newmsg = {payload:message}\n    m_out.push(newmsg);\n}\n//node.send(message);\nreturn [m_out];\n\n**/\nvar lat_d = {payload:lat};\nvar lon_d = {payload:lon};\nreturn [msg,lat_d,lon_d];\n",
+        "outputs": 3,
+        "noerr": 0,
+        "x": 881,
+        "y": 180,
+        "wires": [
+            [
+                "3718cc4a.0807a4",
+                "8366a542.c5dc78",
+                "554ee598.41c5fc",
+                "d6e8ae02.9b5e8",
+                "d7596ea9.f6d6b",
+                "1361d41e.b1bb4c"
+            ],
+            [
+                "15c7ce99.e8acd1"
+            ],
+            [
+                "d6283cae.7a0f9"
+            ]
+        ]
+    },
+    {
+        "id": "cf9a8b20.19b4e8",
+        "type": "debug",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1030,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "3718cc4a.0807a4",
+        "type": "delay",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "2",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 880,
+        "y": 240,
+        "wires": [
+            [
+                "2c64e81b.a269e8",
+                "13b35125.135f3f"
+            ]
+        ]
+    },
+    {
+        "id": "99f21098.bd013",
+        "type": "comment",
+        "z": "9f870fda.94bda",
+        "name": "Vehicle 1 Journey",
+        "info": "",
+        "x": 830,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "3ec9a015.a4c38",
+        "type": "function",
+        "z": "9f870fda.94bda",
+        "name": "Distance",
+        "func": "function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {\n  var R = 6371; // Radius of the earth in km\n  var dLat = deg2rad(lat2-lat1);  // deg2rad below\n  var dLon = deg2rad(lon2-lon1); \n  var a = \n    Math.sin(dLat/2) * Math.sin(dLat/2) +\n    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * \n    Math.sin(dLon/2) * Math.sin(dLon/2)\n    ; \n  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); \n  var d = R * c; // Distance in km\n  return d;\n}\n\nfunction deg2rad(deg) {\n  return deg * (Math.PI/180)\n}\nmsg.payload = getDistanceFromLatLonInKm(7.486944,80.365045,7.473803,80.390385)\n//msg.payload = getDistanceFromLatLonInKm(0,0,0,0)\n   // lat:7.486944, \n   // lon:80.365045,\n   // lat:7.473803,\t\n  // lon:80.390385,\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 980,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "67f0dcb7.3aec84",
+        "type": "split",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": "2",
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "lon",
+        "x": 680,
+        "y": 340,
+        "wires": [
+            [
+                "361eaec7.d5ad52"
+            ]
+        ]
+    },
+    {
+        "id": "361eaec7.d5ad52",
+        "type": "debug",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 860,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "f7b5067.232cbf8",
+        "type": "inject",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 130,
+        "y": 220,
+        "wires": [
+            [
+                "f6694f3a.355a6"
+            ]
+        ]
+    },
+    {
+        "id": "d7e6ba4f.59be58",
+        "type": "function",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "func": "var msg1 = msg.payload;\nreturn msg1;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 710,
+        "y": 400,
+        "wires": [
+            [
+                "f3d9f112.f4c8e"
+            ]
+        ]
+    },
+    {
+        "id": "93b6dc2d.8b301",
+        "type": "debug",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 910,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "f3d9f112.f4c8e",
+        "type": "debug",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 930,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "6eedc41.856b83c",
+        "type": "debug",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 500,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "89600323.cb5a1",
+        "type": "switch",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "1",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1410,
+        "y": 140,
+        "wires": [
+            [
+                "d5b7c2fc.c0db2"
+            ]
+        ]
+    },
+    {
+        "id": "d5b7c2fc.c0db2",
+        "type": "mqtt out",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "x": 1530,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "8366a542.c5dc78",
+        "type": "function",
+        "z": "9f870fda.94bda",
+        "name": "SS1-dist",
+        "func": "//msg.payload = v1.lon;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1246,
+        "y": 140,
+        "wires": [
+            [
+                "89600323.cb5a1",
+                "a08a6fd9.ea403"
+            ]
+        ]
+    },
+    {
+        "id": "554ee598.41c5fc",
+        "type": "function",
+        "z": "9f870fda.94bda",
+        "name": "SS2-dist",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1242,
+        "y": 200,
+        "wires": [
+            [
+                "5e19a67.0c42458"
+            ]
+        ]
+    },
+    {
+        "id": "d6e8ae02.9b5e8",
+        "type": "function",
+        "z": "9f870fda.94bda",
+        "name": "SS3-dist",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1241,
+        "y": 259,
+        "wires": [
+            [
+                "88b8cc79.2b83"
+            ]
+        ]
+    },
+    {
+        "id": "d7596ea9.f6d6b",
+        "type": "function",
+        "z": "9f870fda.94bda",
+        "name": "SS4-dist",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1240,
+        "y": 320,
+        "wires": [
+            [
+                "7a603bdf.b29bd4"
+            ]
+        ]
+    },
+    {
+        "id": "1361d41e.b1bb4c",
+        "type": "function",
+        "z": "9f870fda.94bda",
+        "name": "SS5-dist",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1240,
+        "y": 380,
+        "wires": [
+            [
+                "5849d623.9cc2c8"
+            ]
+        ]
+    },
+    {
+        "id": "5e19a67.0c42458",
+        "type": "switch",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "1",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1410,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "88b8cc79.2b83",
+        "type": "switch",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "1",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1410,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7a603bdf.b29bd4",
+        "type": "switch",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "1",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1390,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5849d623.9cc2c8",
+        "type": "switch",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "1",
+                "vt": "num"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1390,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a08a6fd9.ea403",
+        "type": "debug",
+        "z": "9f870fda.94bda",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "x": 1410,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "15c7ce99.e8acd1",
+        "type": "debug",
+        "z": "9f870fda.94bda",
+        "name": "Lon",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 1190,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "d6283cae.7a0f9",
+        "type": "debug",
+        "z": "9f870fda.94bda",
+        "name": "Lat",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 1190,
+        "y": 520,
+        "wires": []
+    }
+]

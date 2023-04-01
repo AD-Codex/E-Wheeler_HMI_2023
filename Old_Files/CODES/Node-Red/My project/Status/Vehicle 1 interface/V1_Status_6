@@ -1,0 +1,1263 @@
+[
+    {
+        "id": "b0392d19.c2e2b",
+        "type": "tab",
+        "label": "SS Status Subscriber 2",
+        "disabled": false,
+        "info": "SS Status Subscriber - with distance publisher"
+    },
+    {
+        "id": "f3076487.43ff78",
+        "type": "mqtt in",
+        "z": "b0392d19.c2e2b",
+        "name": "sub SS/status/",
+        "topic": "eeuop/SS/status/#",
+        "qos": "0",
+        "broker": "62b11e8.bc166e",
+        "x": 120,
+        "y": 120,
+        "wires": [
+            [
+                "4d45b190.5f787",
+                "34608b3f.0d4ef4"
+            ]
+        ]
+    },
+    {
+        "id": "34608b3f.0d4ef4",
+        "type": "debug",
+        "z": "b0392d19.c2e2b",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 250,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "66919e3d.91626",
+        "type": "debug",
+        "z": "b0392d19.c2e2b",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 470,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "7aa2927b.83effc",
+        "type": "debug",
+        "z": "b0392d19.c2e2b",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 470,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "45f36fe2.09fd1",
+        "type": "function",
+        "z": "b0392d19.c2e2b",
+        "name": "ON",
+        "func": "var ss = msg.topic.split('/')[3];\nnode.warn(ss)\nvar SS = global.get(ss);\nSS.iconColor=\"green\";\nSS.icon =\"check\";\nmsg.payload = SS;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 450,
+        "y": 120,
+        "wires": [
+            [
+                "61f055dc.2467cc",
+                "8c831a78.8ae418"
+            ]
+        ]
+    },
+    {
+        "id": "dbea35e2.ad7d88",
+        "type": "function",
+        "z": "b0392d19.c2e2b",
+        "name": "OFF",
+        "func": "var ss = msg.topic.split('/')[3];\nnode.warn(ss)\nvar SS = global.get(ss);\nSS.iconColor=\"red\";\nSS.icon =\"close\";\nmsg.payload = SS;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 450,
+        "y": 160,
+        "wires": [
+            [
+                "e31b20c.85dcfe",
+                "8c831a78.8ae418"
+            ]
+        ]
+    },
+    {
+        "id": "4d45b190.5f787",
+        "type": "switch",
+        "z": "b0392d19.c2e2b",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "true",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "false",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": true,
+        "outputs": 2,
+        "x": 270,
+        "y": 120,
+        "wires": [
+            [
+                "66919e3d.91626",
+                "45f36fe2.09fd1"
+            ],
+            [
+                "7aa2927b.83effc",
+                "dbea35e2.ad7d88"
+            ]
+        ]
+    },
+    {
+        "id": "61f055dc.2467cc",
+        "type": "debug",
+        "z": "b0392d19.c2e2b",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 570,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "e31b20c.85dcfe",
+        "type": "debug",
+        "z": "b0392d19.c2e2b",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 570,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "88c7623e.95f84",
+        "type": "inject",
+        "z": "b0392d19.c2e2b",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "",
+        "x": 110,
+        "y": 400,
+        "wires": [
+            [
+                "6adc0b3c.a90b34"
+            ]
+        ]
+    },
+    {
+        "id": "53198031.1a0a2",
+        "type": "ui_template",
+        "z": "b0392d19.c2e2b",
+        "group": "9f9ae40a.cbf7d8",
+        "name": "",
+        "order": 2,
+        "width": "11",
+        "height": "10",
+        "format": "<div ng-bind-html=\"msg.payload | trusted\"></div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "templateScope": "local",
+        "x": 500,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6adc0b3c.a90b34",
+        "type": "template",
+        "z": "b0392d19.c2e2b",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<iframe src=\"../worldmap\" height=450px width =500px ></iframe>",
+        "x": 300,
+        "y": 400,
+        "wires": [
+            [
+                "53198031.1a0a2"
+            ]
+        ]
+    },
+    {
+        "id": "8d4a1f0e.31b71",
+        "type": "function",
+        "z": "b0392d19.c2e2b",
+        "name": "Add SS (1:6)",
+        "func": "var SS1  =  {\n    name:\"SS1 : Kurunegala\", \n    lat:7.486944, \n    lon:80.365045,\n    icon:\"tag\",\n    iconColor:\"blue\",\n    extrainfo:\"Hello ! this is station 1\"\n};\nglobal.set(\"SS1\",SS1);\n\nvar SS2  =  {\n    name:\"SS2 : Mallawapitiya\", \n    lat:7.473803,\t\n    lon:80.390385,\n    icon:\"tag\",\n    extrainfo:\"Hello ! this is station 2\",\n    iconColor:\"blue\"\n};\nglobal.set(\"SS2\",SS2);\n\nvar SS3 = {\n    name:\"SS3 : Pilessa\", \n    lat:7.453491,\t\n    lon:80.418123,\n    icon:\"tag\",\n    iconColor:\"blue\",\n    extrainfo:\"Hello ! this is station 3\"\n};\nglobal.set(\"SS3\",SS3);\n\t\nvar SS4 = {\n    name:\"SS4 : Mawatagama\", \n    lat:7.432725,\t\n    lon:80.446576,\n    icon:\"tag\",\n    iconColor:\"blue\",\n    extrainfo:\"Hello ! this is station 4\"\n};\nglobal.set(\"SS4\",SS4);\n\t\nvar SS5 = {\n    name:\"SS5 : Galagedara\", \n    lat:7.372298,\t\n    lon:80.526042,\n    icon:\"tag\",\n    iconColor:\"blue\",\n    extrainfo:\"Hello ! this is station 5\"\n};\nglobal.set(\"SS5\",SS5);\n\t\nvar SS6 = {\n    name:\"SS6 : Barigama\", \n    lat:7.327693,\t\n    lon:80.577552,\n    icon:\"tag\",\n    iconColor:\"blue\",\n    extrainfo:\"Hello ! this is station 6\"\n};\nglobal.set(\"SS6\",SS6);\n\nmsg.payload = [SS1,SS2,SS3,SS4,SS5,SS6];\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 345,
+        "y": 298,
+        "wires": [
+            [
+                "8956055f.62c3f8",
+                "8c831a78.8ae418"
+            ]
+        ]
+    },
+    {
+        "id": "e01f5783.4c6628",
+        "type": "worldmap in",
+        "z": "b0392d19.c2e2b",
+        "name": "",
+        "path": "/worldmap",
+        "x": 115,
+        "y": 298,
+        "wires": [
+            [
+                "bb69e4b6.f7f898"
+            ]
+        ]
+    },
+    {
+        "id": "bb69e4b6.f7f898",
+        "type": "switch",
+        "z": "b0392d19.c2e2b",
+        "name": "",
+        "property": "payload.action",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "connected",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 225,
+        "y": 298,
+        "wires": [
+            [
+                "8d4a1f0e.31b71"
+            ]
+        ]
+    },
+    {
+        "id": "8956055f.62c3f8",
+        "type": "debug",
+        "z": "b0392d19.c2e2b",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 550,
+        "y": 295,
+        "wires": []
+    },
+    {
+        "id": "8c831a78.8ae418",
+        "type": "worldmap",
+        "z": "b0392d19.c2e2b",
+        "name": "",
+        "lat": "",
+        "lon": "",
+        "zoom": "10",
+        "layer": "OSM",
+        "cluster": "0",
+        "maxage": "",
+        "usermenu": "show",
+        "layers": "hide",
+        "panit": "true",
+        "panlock": "false",
+        "zoomlock": "false",
+        "path": "/worldmap",
+        "x": 580,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "86dffafd.4429c8",
+        "type": "comment",
+        "z": "b0392d19.c2e2b",
+        "name": "Vehicle 1 Subscriber",
+        "info": "",
+        "x": 130,
+        "y": 54,
+        "wires": []
+    },
+    {
+        "id": "9fbfb156.cf0d4",
+        "type": "comment",
+        "z": "b0392d19.c2e2b",
+        "name": "Interface",
+        "info": "",
+        "x": 100,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "6f0f89d8.c2d658",
+        "type": "ui_gauge",
+        "z": "b0392d19.c2e2b",
+        "name": "Battery Life",
+        "group": "90545213.37223",
+        "order": 2,
+        "width": "3",
+        "height": "3",
+        "gtype": "wave",
+        "title": "",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 330,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "577b313c.c066e",
+        "type": "ui_gauge",
+        "z": "b0392d19.c2e2b",
+        "name": "",
+        "group": "fb443824.2b7358",
+        "order": 2,
+        "width": "3",
+        "height": "3",
+        "gtype": "gage",
+        "title": "",
+        "label": "Celcius",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "30",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "15",
+        "seg2": "25",
+        "x": 650,
+        "y": 541,
+        "wires": []
+    },
+    {
+        "id": "de7dbfba.c19d5",
+        "type": "ui_slider",
+        "z": "b0392d19.c2e2b",
+        "name": "",
+        "label": "",
+        "tooltip": "",
+        "group": "90545213.37223",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "outs": "all",
+        "topic": "eeuop/EV/B/soc/v1",
+        "min": "0",
+        "max": "100",
+        "step": "0.5",
+        "x": 190,
+        "y": 540,
+        "wires": [
+            [
+                "6f0f89d8.c2d658",
+                "6dd66aa.b01c294"
+            ]
+        ]
+    },
+    {
+        "id": "6213cfdb.454e7",
+        "type": "inject",
+        "z": "b0392d19.c2e2b",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 80,
+        "y": 540,
+        "wires": [
+            [
+                "de7dbfba.c19d5"
+            ]
+        ]
+    },
+    {
+        "id": "562709ec.c55708",
+        "type": "inject",
+        "z": "b0392d19.c2e2b",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 480,
+        "y": 501,
+        "wires": [
+            [
+                "71379769.9220b8"
+            ]
+        ]
+    },
+    {
+        "id": "6657c1d.318ba4",
+        "type": "ui_text",
+        "z": "b0392d19.c2e2b",
+        "group": "90545213.37223",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Battery Life",
+        "format": "{{}}",
+        "layout": "row-spread",
+        "x": 310,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "e12caba2.e0ee28",
+        "type": "ui_text",
+        "z": "b0392d19.c2e2b",
+        "group": "fb443824.2b7358",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Temperature",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "x": 650,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "71379769.9220b8",
+        "type": "ui_slider",
+        "z": "b0392d19.c2e2b",
+        "name": "",
+        "label": "",
+        "tooltip": "",
+        "group": "fb443824.2b7358",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "outs": "all",
+        "topic": "",
+        "min": "0",
+        "max": "30",
+        "step": "1",
+        "x": 550,
+        "y": 541,
+        "wires": [
+            [
+                "577b313c.c066e"
+            ]
+        ]
+    },
+    {
+        "id": "cf9e6d80.7797",
+        "type": "comment",
+        "z": "b0392d19.c2e2b",
+        "name": "Battery Status",
+        "info": "",
+        "x": 110,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "4ef50be8.3da154",
+        "type": "file in",
+        "z": "b0392d19.c2e2b",
+        "name": "Vehicle1",
+        "filename": "/home/pi/Desktop/Project/Node-red/Vehicle1_gpxdata.txt",
+        "format": "lines",
+        "chunk": false,
+        "sendError": false,
+        "x": 860,
+        "y": 120,
+        "wires": [
+            [
+                "51993657.2adda8",
+                "cfc1c133.7a708",
+                "7571ce30.4e929"
+            ]
+        ]
+    },
+    {
+        "id": "e5d820d2.9420e",
+        "type": "inject",
+        "z": "b0392d19.c2e2b",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.1",
+        "x": 810,
+        "y": 60,
+        "wires": [
+            [
+                "4ef50be8.3da154"
+            ]
+        ]
+    },
+    {
+        "id": "2cb5ab61.643aa4",
+        "type": "debug",
+        "z": "b0392d19.c2e2b",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1090,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "51993657.2adda8",
+        "type": "function",
+        "z": "b0392d19.c2e2b",
+        "name": "Split > Update object",
+        "func": "var lat1 = msg.payload.split(',')[0];\n//node.warn(lon1)\nvar lon1= msg.payload.split(',')[1];\n//node.warn(lat1)\n\nvar lat = lat1;\nvar lon = lon1;\n\nvar v1 = {\n    lon:lon, \n    lat:lat,\n    name:\"eWheeler 1\", \n    icon:\"fa-car\"\n};\n\nmsg.payload= v1;\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 880,
+        "y": 180,
+        "wires": [
+            [
+                "be324484.d767e8",
+                "9d6445d8.8484d8"
+            ]
+        ]
+    },
+    {
+        "id": "cfc1c133.7a708",
+        "type": "debug",
+        "z": "b0392d19.c2e2b",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1030,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "be324484.d767e8",
+        "type": "delay",
+        "z": "b0392d19.c2e2b",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "2",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 880,
+        "y": 240,
+        "wires": [
+            [
+                "2cb5ab61.643aa4",
+                "8c831a78.8ae418"
+            ]
+        ]
+    },
+    {
+        "id": "94d945bc.09d6b8",
+        "type": "comment",
+        "z": "b0392d19.c2e2b",
+        "name": "Vehicle 1 Journey",
+        "info": "",
+        "x": 830,
+        "y": 20,
+        "wires": []
+    },
+    {
+        "id": "6dd66aa.b01c294",
+        "type": "mqtt out",
+        "z": "b0392d19.c2e2b",
+        "name": "",
+        "topic": "",
+        "qos": "0",
+        "retain": "",
+        "broker": "62b11e8.bc166e",
+        "x": 350,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "7571ce30.4e929",
+        "type": "delay",
+        "z": "b0392d19.c2e2b",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "2",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 1120,
+        "y": 180,
+        "wires": [
+            [
+                "753ee82b.138328"
+            ]
+        ]
+    },
+    {
+        "id": "b9a13280.80b86",
+        "type": "switch",
+        "z": "b0392d19.c2e2b",
+        "name": "check",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1430,
+        "y": 40,
+        "wires": [
+            [
+                "bca84529.201258"
+            ],
+            [
+                "75596e65.7be3f"
+            ]
+        ]
+    },
+    {
+        "id": "753ee82b.138328",
+        "type": "function",
+        "z": "b0392d19.c2e2b",
+        "name": "SS-dist",
+        "func": "// -- Obtain lon/lat of vehicle\nvar lat_now = msg.payload.split(',')[0];\n//node.warn(lon1)\nvar lon_now= msg.payload.split(',')[1];\n//node.warn(lat1)\nvar lat_v = lat_now;\nvar lon_v = lon_now;\n\nfunction getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {\n  var R = 6371; // Radius of the earth in km\n  var dLat = deg2rad(lat2-lat1);  // deg2rad below\n  var dLon = deg2rad(lon2-lon1); \n  var a = \n    Math.sin(dLat/2) * Math.sin(dLat/2) +\n    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * \n    Math.sin(dLon/2) * Math.sin(dLon/2)\n    ; \n  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); \n  var d = R * c; // Distance in km\n  return d;\n}\n\nfunction deg2rad(deg) {\n  return deg * (Math.PI/180)\n}\n\nvar SS1_dis= {payload : getDistanceFromLatLonInKm(7.486944,80.365045,lat_v,lon_v)}\nvar SS2_dis= {payload : getDistanceFromLatLonInKm(7.473803,80.390385,lat_v,lon_v)}\nvar SS3_dis= {payload : getDistanceFromLatLonInKm(7.453491,80.418123,lat_v,lon_v)}\nvar SS4_dis= {payload : getDistanceFromLatLonInKm(7.432725,80.446576,lat_v,lon_v)}\nvar SS5_dis= {payload : getDistanceFromLatLonInKm(7.372298,80.526042,lat_v,lon_v)}\nvar SS6_dis= {payload : getDistanceFromLatLonInKm(7.327693,80.577552,lat_v,lon_v)}\n\n\n/**\n    name:\"SS3 : Pilessa\", \n    lat:7.453491,\t\n    lon:80.418123,\n  \n    name:\"SS4 : Mawatagama\", \n    lat:7.432725,\t\n    lon:80.446576,\n \t\n    name:\"SS5 : Galagedara\", \n    lat:7.372298,\t\n    lon:80.526042,\n\n    name:\"SS6 : Barigama\", \n    lat:7.327693,\t\n    lon:80.577552,\n   **/\n  \nreturn [SS1_dis, SS2_dis, SS3_dis,SS4_dis,SS5_dis,SS6_dis];",
+        "outputs": 6,
+        "noerr": 0,
+        "x": 1260,
+        "y": 180,
+        "wires": [
+            [
+                "b9a13280.80b86",
+                "ba4e2a87.828318"
+            ],
+            [
+                "1bb18557.2bde2b",
+                "cea3587a.537598"
+            ],
+            [
+                "27aa0485.f77ecc",
+                "5057c42f.f8e32c"
+            ],
+            [
+                "260ca342.c1a50c",
+                "c8af467e.bb09b8"
+            ],
+            [
+                "1313f862.8b4df8",
+                "ba68789c.ca9cc8"
+            ],
+            [
+                "1cac004b.cbeab",
+                "d0df463.dd957b8"
+            ]
+        ]
+    },
+    {
+        "id": "bca84529.201258",
+        "type": "function",
+        "z": "b0392d19.c2e2b",
+        "name": "publish 1",
+        "func": "var value = 1;\nmsg.payload = value;\nmsg.topic =\"dist2/v1/SS1\";\nreturn msg ;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1580,
+        "y": 40,
+        "wires": [
+            [
+                "b41efe16.0eb8"
+            ]
+        ]
+    },
+    {
+        "id": "b41efe16.0eb8",
+        "type": "mqtt out",
+        "z": "b0392d19.c2e2b",
+        "name": "",
+        "topic": "",
+        "qos": "",
+        "retain": "",
+        "broker": "62b11e8.bc166e",
+        "x": 1790,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "1bb18557.2bde2b",
+        "type": "switch",
+        "z": "b0392d19.c2e2b",
+        "name": "check",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1430,
+        "y": 80,
+        "wires": [
+            [
+                "f08fee67.bae49"
+            ],
+            [
+                "b1f40308.7dfa3"
+            ]
+        ]
+    },
+    {
+        "id": "f08fee67.bae49",
+        "type": "function",
+        "z": "b0392d19.c2e2b",
+        "name": "publish 1",
+        "func": "var value = 1;\nmsg.payload = value;\nmsg.topic =\"dist2/v1/SS2\";\nreturn msg ;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1580,
+        "y": 100,
+        "wires": [
+            [
+                "b41efe16.0eb8"
+            ]
+        ]
+    },
+    {
+        "id": "75596e65.7be3f",
+        "type": "function",
+        "z": "b0392d19.c2e2b",
+        "name": "publish 0",
+        "func": "var value = 0;\nmsg.payload = value;\nmsg.topic =\"dist2/v1/SS1\";\nreturn msg ;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1580,
+        "y": 60,
+        "wires": [
+            [
+                "b41efe16.0eb8"
+            ]
+        ]
+    },
+    {
+        "id": "b1f40308.7dfa3",
+        "type": "function",
+        "z": "b0392d19.c2e2b",
+        "name": "publish 0",
+        "func": "var value = 0;\nmsg.payload = value;\nmsg.topic =\"dist2/v1/SS2\";\nreturn msg ;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1580,
+        "y": 120,
+        "wires": [
+            [
+                "b41efe16.0eb8"
+            ]
+        ]
+    },
+    {
+        "id": "27aa0485.f77ecc",
+        "type": "switch",
+        "z": "b0392d19.c2e2b",
+        "name": "check",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1430,
+        "y": 160,
+        "wires": [
+            [
+                "ee86448b.4e88f8"
+            ],
+            [
+                "efa3ba0b.6ed688"
+            ]
+        ]
+    },
+    {
+        "id": "ee86448b.4e88f8",
+        "type": "function",
+        "z": "b0392d19.c2e2b",
+        "name": "publish 1",
+        "func": "var value = 1;\nmsg.payload = value;\nmsg.topic =\"dist2/v1/SS3\";\nreturn msg ;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1580,
+        "y": 160,
+        "wires": [
+            [
+                "b41efe16.0eb8"
+            ]
+        ]
+    },
+    {
+        "id": "260ca342.c1a50c",
+        "type": "switch",
+        "z": "b0392d19.c2e2b",
+        "name": "check",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1430,
+        "y": 200,
+        "wires": [
+            [
+                "1dcbc60f.d0e4fa"
+            ],
+            [
+                "3e88cd31.3def52"
+            ]
+        ]
+    },
+    {
+        "id": "1dcbc60f.d0e4fa",
+        "type": "function",
+        "z": "b0392d19.c2e2b",
+        "name": "publish 1",
+        "func": "var value = 1;\nmsg.payload = value;\nmsg.topic =\"dist2/v1/SS4\";\nreturn msg ;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1580,
+        "y": 220,
+        "wires": [
+            [
+                "b41efe16.0eb8"
+            ]
+        ]
+    },
+    {
+        "id": "efa3ba0b.6ed688",
+        "type": "function",
+        "z": "b0392d19.c2e2b",
+        "name": "publish 0",
+        "func": "var value = 0;\nmsg.payload = value;\nmsg.topic =\"dist2/v1/SS3\";\nreturn msg ;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1580,
+        "y": 180,
+        "wires": [
+            [
+                "b41efe16.0eb8"
+            ]
+        ]
+    },
+    {
+        "id": "3e88cd31.3def52",
+        "type": "function",
+        "z": "b0392d19.c2e2b",
+        "name": "publish 0",
+        "func": "var value = 0;\nmsg.payload = value;\nmsg.topic =\"dist2/v1/SS4\";\nreturn msg ;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1580,
+        "y": 240,
+        "wires": [
+            [
+                "b41efe16.0eb8"
+            ]
+        ]
+    },
+    {
+        "id": "1313f862.8b4df8",
+        "type": "switch",
+        "z": "b0392d19.c2e2b",
+        "name": "check",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1430,
+        "y": 280,
+        "wires": [
+            [
+                "760b6ac4.ba0804"
+            ],
+            [
+                "37a7eebc.c6aa32"
+            ]
+        ]
+    },
+    {
+        "id": "760b6ac4.ba0804",
+        "type": "function",
+        "z": "b0392d19.c2e2b",
+        "name": "publish 1",
+        "func": "var value = 1;\nmsg.payload = value;\nmsg.topic =\"dist2/v1/SS5\";\nreturn msg ;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1580,
+        "y": 280,
+        "wires": [
+            [
+                "b41efe16.0eb8"
+            ]
+        ]
+    },
+    {
+        "id": "1cac004b.cbeab",
+        "type": "switch",
+        "z": "b0392d19.c2e2b",
+        "name": "check",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1430,
+        "y": 320,
+        "wires": [
+            [
+                "b278fd10.13086"
+            ],
+            [
+                "58e4cf9.6704c3"
+            ]
+        ]
+    },
+    {
+        "id": "b278fd10.13086",
+        "type": "function",
+        "z": "b0392d19.c2e2b",
+        "name": "publish 1",
+        "func": "var value = 1;\nmsg.payload = value;\nmsg.topic =\"dist2/v1/SS6\";\nreturn msg ;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1580,
+        "y": 340,
+        "wires": [
+            [
+                "b41efe16.0eb8"
+            ]
+        ]
+    },
+    {
+        "id": "37a7eebc.c6aa32",
+        "type": "function",
+        "z": "b0392d19.c2e2b",
+        "name": "publish 0",
+        "func": "var value = 0;\nmsg.payload = value;\nmsg.topic =\"dist2/v1/SS5\";\nreturn msg ;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1580,
+        "y": 300,
+        "wires": [
+            [
+                "b41efe16.0eb8"
+            ]
+        ]
+    },
+    {
+        "id": "58e4cf9.6704c3",
+        "type": "function",
+        "z": "b0392d19.c2e2b",
+        "name": "publish 0",
+        "func": "var value = 0;\nmsg.payload = value;\nmsg.topic =\"dist2/v1/SS6\";\nreturn msg ;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1580,
+        "y": 360,
+        "wires": [
+            [
+                "b41efe16.0eb8"
+            ]
+        ]
+    },
+    {
+        "id": "d0df463.dd957b8",
+        "type": "debug",
+        "z": "b0392d19.c2e2b",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1429,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "ba68789c.ca9cc8",
+        "type": "debug",
+        "z": "b0392d19.c2e2b",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1429,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "c8af467e.bb09b8",
+        "type": "debug",
+        "z": "b0392d19.c2e2b",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1429,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "5057c42f.f8e32c",
+        "type": "debug",
+        "z": "b0392d19.c2e2b",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1429,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "cea3587a.537598",
+        "type": "debug",
+        "z": "b0392d19.c2e2b",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1429,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "ba4e2a87.828318",
+        "type": "debug",
+        "z": "b0392d19.c2e2b",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1429,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "9d6445d8.8484d8",
+        "type": "debug",
+        "z": "b0392d19.c2e2b",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1250,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "62b11e8.bc166e",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "",
+        "broker": "test.mosquitto.org",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "9f9ae40a.cbf7d8",
+        "type": "ui_group",
+        "z": "",
+        "name": "Map",
+        "tab": "6b45a9f7.dcee28",
+        "order": 3,
+        "disp": true,
+        "width": "11",
+        "collapse": false
+    },
+    {
+        "id": "90545213.37223",
+        "type": "ui_group",
+        "z": "",
+        "name": "Battery Life",
+        "tab": "6b45a9f7.dcee28",
+        "order": 4,
+        "disp": false,
+        "width": "3",
+        "collapse": false
+    },
+    {
+        "id": "fb443824.2b7358",
+        "type": "ui_group",
+        "z": "",
+        "name": "Temperature",
+        "tab": "6b45a9f7.dcee28",
+        "order": 5,
+        "disp": false,
+        "width": "3",
+        "collapse": false
+    },
+    {
+        "id": "6b45a9f7.dcee28",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Human Machine Interface [ eWheeler 1 ]",
+        "icon": "dashboard",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    }
+]

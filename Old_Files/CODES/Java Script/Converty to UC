@@ -1,0 +1,28 @@
+CHANGE TO UPPER CASE 
+-----------------------
+var payload = msg.payload;//get payload
+msg.payload = payload.toUpperCase();//convert to UC
+return msg;
+
+TOIC SPLITTER
+--------------
+node.log("here");
+if (msg.topic==="emspe/sensors/main-door"){
+    node.log("t1");
+        return["maindoor",null];
+}
+if(msg.topic==="emspe/sensors/main-light"){
+    node.log("t2");
+        return[null,msg.payload];
+}
+node.log("t3");
+return 
+----------
+var topic = msg.topic;
+if (topic === "emspe/test1"){
+    return[msg,null];
+}
+if (topic==="emspe/test2"){
+    return[null,msg];
+}
+return msg;

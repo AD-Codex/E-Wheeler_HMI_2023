@@ -1,0 +1,136 @@
+[
+    {
+        "id": "fbbc9ae6.d28418",
+        "type": "tab",
+        "label": "GPS Data Receiver and Mapper",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "e1800cb4.f22e2",
+        "type": "function",
+        "z": "fbbc9ae6.d28418",
+        "name": "",
+        "func": "var lt = msg.payload.split('/')[0];\nvar ln = msg.payload.split('/')[1];\n\nvar lat = parseFloat(lt);\nvar lon = parseFloat(ln);\n\nvar V1  =  {\n    name:\"Vehicle-1\", \n    lat:lat, \n    lon:lon,\n    icon:\"car\",\n    iconColor:\"#e933ff\",\n    extrainfo:\"You are here !\",\n    \n};\nmsg.payload = V1\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 275,
+        "y": 93,
+        "wires": [
+            [
+                "322fbc11.38c134",
+                "2be3de3e.df5592"
+            ]
+        ]
+    },
+    {
+        "id": "34393179.66a69e",
+        "type": "inject",
+        "z": "fbbc9ae6.d28418",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 116,
+        "y": 30,
+        "wires": [
+            [
+                "e1800cb4.f22e2"
+            ]
+        ]
+    },
+    {
+        "id": "322fbc11.38c134",
+        "type": "debug",
+        "z": "fbbc9ae6.d28418",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 436,
+        "y": 87,
+        "wires": []
+    },
+    {
+        "id": "6181f226.93850c",
+        "type": "mqtt in",
+        "z": "fbbc9ae6.d28418",
+        "name": "",
+        "topic": "93/gps/v1/LatLon",
+        "qos": "0",
+        "broker": "49900b23.67bb04",
+        "x": 87,
+        "y": 90,
+        "wires": [
+            [
+                "2d7bb3ff.a4cd8c",
+                "e1800cb4.f22e2"
+            ]
+        ]
+    },
+    {
+        "id": "2d7bb3ff.a4cd8c",
+        "type": "debug",
+        "z": "fbbc9ae6.d28418",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 325,
+        "y": 169,
+        "wires": []
+    },
+    {
+        "id": "2be3de3e.df5592",
+        "type": "worldmap",
+        "z": "fbbc9ae6.d28418",
+        "name": "",
+        "lat": "",
+        "lon": "",
+        "zoom": "",
+        "layer": "OSM",
+        "cluster": "",
+        "maxage": "",
+        "usermenu": "show",
+        "layers": "show",
+        "panit": "true",
+        "panlock": "false",
+        "zoomlock": "false",
+        "hiderightclick": "false",
+        "coords": "dms",
+        "path": "/worldmap",
+        "x": 458.75,
+        "y": 128.75,
+        "wires": []
+    },
+    {
+        "id": "49900b23.67bb04",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "",
+        "broker": "test.mosquitto.org",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    }
+]

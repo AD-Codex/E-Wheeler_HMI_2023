@@ -1,0 +1,222 @@
+[
+    {
+        "id": "45dfba21.58b6b4",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "1e9a5860.9a2958",
+        "type": "mqtt in",
+        "z": "45dfba21.58b6b4",
+        "name": "",
+        "topic": "93/bms/v1/#",
+        "qos": "0",
+        "broker": "62b11e8.bc166e",
+        "x": 100,
+        "y": 160,
+        "wires": [
+            [
+                "c5e12d27.71acc"
+            ]
+        ]
+    },
+    {
+        "id": "35bb379c.591e68",
+        "type": "comment",
+        "z": "45dfba21.58b6b4",
+        "name": "SOC & SOH subscriber",
+        "info": "",
+        "x": 120,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "c5e12d27.71acc",
+        "type": "switch",
+        "z": "45dfba21.58b6b4",
+        "name": "",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "soc",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "soh",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 250,
+        "y": 160,
+        "wires": [
+            [
+                "e9d395a2.4f27a8",
+                "6571e33a.8f393c",
+                "b45567f7.312628"
+            ],
+            [
+                "965ef800.1ff2c8",
+                "b89153fb.97302",
+                "647d8193.64b58"
+            ]
+        ]
+    },
+    {
+        "id": "965ef800.1ff2c8",
+        "type": "ui_gauge",
+        "z": "45dfba21.58b6b4",
+        "name": "",
+        "group": "c511765b.158338",
+        "order": 4,
+        "width": "5",
+        "height": "5",
+        "gtype": "gage",
+        "title": "",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "50",
+        "seg2": "75",
+        "x": 410,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "e9d395a2.4f27a8",
+        "type": "ui_gauge",
+        "z": "45dfba21.58b6b4",
+        "name": "",
+        "group": "c511765b.158338",
+        "order": 2,
+        "width": "4",
+        "height": "4",
+        "gtype": "wave",
+        "title": "",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 410,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "6571e33a.8f393c",
+        "type": "debug",
+        "z": "45dfba21.58b6b4",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 450,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "b89153fb.97302",
+        "type": "debug",
+        "z": "45dfba21.58b6b4",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 450,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "647d8193.64b58",
+        "type": "ui_text",
+        "z": "45dfba21.58b6b4",
+        "group": "c511765b.158338",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "SOH",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 410,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "b45567f7.312628",
+        "type": "ui_text",
+        "z": "45dfba21.58b6b4",
+        "group": "c511765b.158338",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "SOC",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 410,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "62b11e8.bc166e",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "",
+        "broker": "test.mosquitto.org",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "c511765b.158338",
+        "type": "ui_group",
+        "z": "",
+        "name": "Default",
+        "tab": "2ccb0cc8.7e1014",
+        "disp": false,
+        "width": "6"
+    },
+    {
+        "id": "2ccb0cc8.7e1014",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Home",
+        "icon": "dashboard"
+    }
+]

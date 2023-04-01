@@ -1,0 +1,137 @@
+[
+    {
+        "id": "6f484de1.802ad4",
+        "type": "tab",
+        "label": "Font Color",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "3582c80d.d082f8",
+        "type": "ui_text",
+        "z": "6f484de1.802ad4",
+        "group": "5dfea3d9.7d09bc",
+        "order": 0,
+        "width": "0",
+        "height": "0",
+        "name": "",
+        "label": "",
+        "format": "<font color= {{msg.color}} > {{msg.payload}} </font>",
+        "layout": "row-left",
+        "x": 755.1000595092773,
+        "y": 172.60000705718994,
+        "wires": []
+    },
+    {
+        "id": "d664566c.c0ad08",
+        "type": "inject",
+        "z": "6f484de1.802ad4",
+        "name": "",
+        "topic": "",
+        "payload": "disarmed",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 383.00000762939453,
+        "y": 107.00000190734863,
+        "wires": [
+            [
+                "df648c72.a028d"
+            ]
+        ]
+    },
+    {
+        "id": "df648c72.a028d",
+        "type": "function",
+        "z": "6f484de1.802ad4",
+        "name": "Color Mapping",
+        "func": "switch (msg.payload) {\n\ncase \"disarmed\" : \n    msg.color = \"lime\";\n    break;\n    \ncase \"pending\" : \n    msg.color = \"yellow\";\n    break;\n    \ndefault : \n    msg.color = \"red\";\n    break;\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 586.1000556945801,
+        "y": 172.60000228881836,
+        "wires": [
+            [
+                "3582c80d.d082f8"
+            ]
+        ]
+    },
+    {
+        "id": "1998f85c.fba078",
+        "type": "inject",
+        "z": "6f484de1.802ad4",
+        "name": "",
+        "topic": "",
+        "payload": "pending",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 390.00000762939453,
+        "y": 154.00000190734863,
+        "wires": [
+            [
+                "df648c72.a028d"
+            ]
+        ]
+    },
+    {
+        "id": "34889215.40eb0e",
+        "type": "inject",
+        "z": "6f484de1.802ad4",
+        "name": "",
+        "topic": "",
+        "payload": "armed_home",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 373.00000762939453,
+        "y": 201.00000286102295,
+        "wires": [
+            [
+                "df648c72.a028d"
+            ]
+        ]
+    },
+    {
+        "id": "d5871589.b15a88",
+        "type": "inject",
+        "z": "6f484de1.802ad4",
+        "name": "",
+        "topic": "",
+        "payload": "armed_away",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 371.00000762939453,
+        "y": 247.00000381469727,
+        "wires": [
+            [
+                "df648c72.a028d"
+            ]
+        ]
+    },
+    {
+        "id": "5dfea3d9.7d09bc",
+        "type": "ui_group",
+        "z": "",
+        "name": "Teste",
+        "tab": "8a224921.f40138",
+        "disp": false,
+        "width": "6"
+    },
+    {
+        "id": "8a224921.f40138",
+        "type": "ui_tab",
+        "z": "",
+        "name": "LAB",
+        "icon": "dashboard"
+    }
+]

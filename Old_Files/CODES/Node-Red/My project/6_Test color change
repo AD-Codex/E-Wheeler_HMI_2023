@@ -1,0 +1,472 @@
+[
+    {
+        "id": "751072ed.24579c",
+        "type": "tab",
+        "label": "Flow 4",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "efed3b15.f53da8",
+        "type": "ui_switch",
+        "z": "751072ed.24579c",
+        "name": "",
+        "label": "switch",
+        "tooltip": "",
+        "group": "cd4dbee1.d0a2d",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "decouple": "false",
+        "topic": "emspe3593/SS/status/SS1",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 70,
+        "y": 60,
+        "wires": [
+            [
+                "e0910dbb.bd0ec",
+                "3137869b.6e832a"
+            ]
+        ],
+        "outputLabels": [
+            "1"
+        ]
+    },
+    {
+        "id": "e0910dbb.bd0ec",
+        "type": "debug",
+        "z": "751072ed.24579c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 210,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "7fab5b63.e628f4",
+        "type": "debug",
+        "z": "751072ed.24579c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 230,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "87db12c.d1e05f",
+        "type": "debug",
+        "z": "751072ed.24579c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 450,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "89fba7fc.8662c8",
+        "type": "debug",
+        "z": "751072ed.24579c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 230,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "3137869b.6e832a",
+        "type": "mqtt out",
+        "z": "751072ed.24579c",
+        "name": "pub",
+        "topic": "",
+        "qos": "0",
+        "retain": "",
+        "broker": "e9cb029.64a23",
+        "x": 190,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "6ee82762.c425f8",
+        "type": "mqtt in",
+        "z": "751072ed.24579c",
+        "name": "sub",
+        "topic": "emspe3593/SS/+/SS1",
+        "qos": "0",
+        "broker": "e9cb029.64a23",
+        "x": 70,
+        "y": 160,
+        "wires": [
+            [
+                "7fab5b63.e628f4",
+                "5b950a6d.91df34"
+            ]
+        ]
+    },
+    {
+        "id": "cab498ee.1c02c8",
+        "type": "worldmap",
+        "z": "751072ed.24579c",
+        "name": "",
+        "lat": "",
+        "lon": "",
+        "zoom": "11",
+        "layer": "OSM",
+        "cluster": "4",
+        "maxage": "",
+        "usermenu": "hide",
+        "layers": "hide",
+        "panit": "true",
+        "panlock": "false",
+        "path": "",
+        "x": 590,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "4cc92a22.a92664",
+        "type": "function",
+        "z": "751072ed.24579c",
+        "name": "Add SS1",
+        "func": "var SS1 = global.get('SS1');//define global var for SS1\nSS1  =  {\n    name:\"SS1 : Kurunegala\", \n    lat:7.486944, \n    lon:80.365045,\n    icon:\"tag\",\n    iconColor:\"dark\",\n    extrainfo:\"Hello ! this is station 1\"\n};\nmsg.payload= SS1;\nglobal.set('SS1',SS1);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 260,
+        "y": 360,
+        "wires": [
+            [
+                "9d061312.f2cbf",
+                "cab498ee.1c02c8"
+            ]
+        ]
+    },
+    {
+        "id": "5b950a6d.91df34",
+        "type": "switch",
+        "z": "751072ed.24579c",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "true",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "false",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": true,
+        "outputs": 2,
+        "x": 210,
+        "y": 200,
+        "wires": [
+            [
+                "87db12c.d1e05f",
+                "371863df.b7f2cc"
+            ],
+            [
+                "89fba7fc.8662c8",
+                "7668c58.252253c"
+            ]
+        ]
+    },
+    {
+        "id": "9d061312.f2cbf",
+        "type": "debug",
+        "z": "751072ed.24579c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 410,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "371863df.b7f2cc",
+        "type": "function",
+        "z": "751072ed.24579c",
+        "name": "ON",
+        "func": "var SS1 = global.get('SS1');\nSS1.iconColor=\"green\";\n\nmsg.payload = SS1;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 430,
+        "y": 200,
+        "wires": [
+            [
+                "4366ebad.417684",
+                "cab498ee.1c02c8"
+            ]
+        ]
+    },
+    {
+        "id": "4366ebad.417684",
+        "type": "debug",
+        "z": "751072ed.24579c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 610,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "30a5e8c7.0e6968",
+        "type": "inject",
+        "z": "751072ed.24579c",
+        "name": "",
+        "topic": "",
+        "payload": "SS1",
+        "payloadType": "global",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 120,
+        "y": 360,
+        "wires": [
+            [
+                "4cc92a22.a92664"
+            ]
+        ]
+    },
+    {
+        "id": "7668c58.252253c",
+        "type": "function",
+        "z": "751072ed.24579c",
+        "name": "OFF",
+        "func": "var SS1 = global.get('SS1');\nSS1.iconColor=\"red\";\nmsg.payload = SS1;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 430,
+        "y": 240,
+        "wires": [
+            [
+                "60750d0d.36a4d4",
+                "cab498ee.1c02c8"
+            ]
+        ]
+    },
+    {
+        "id": "60750d0d.36a4d4",
+        "type": "debug",
+        "z": "751072ed.24579c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 610,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "16655581.c1f96a",
+        "type": "inject",
+        "z": "751072ed.24579c",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "",
+        "x": 90,
+        "y": 480,
+        "wires": [
+            [
+                "50a21553.f9a45c"
+            ]
+        ]
+    },
+    {
+        "id": "b2751dfe.b89ad",
+        "type": "ui_template",
+        "z": "751072ed.24579c",
+        "group": "cd4dbee1.d0a2d",
+        "name": "",
+        "order": 2,
+        "width": "6",
+        "height": "8",
+        "format": "<div ng-bind-html=\"msg.payload | trusted\"></div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "templateScope": "local",
+        "x": 400,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "50a21553.f9a45c",
+        "type": "template",
+        "z": "751072ed.24579c",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<iframe src=\"../worldmap\" height=450px width =500px ></iframe>",
+        "x": 240,
+        "y": 480,
+        "wires": [
+            [
+                "b2751dfe.b89ad"
+            ]
+        ]
+    },
+    {
+        "id": "f49183f2.f5de6",
+        "type": "function",
+        "z": "751072ed.24579c",
+        "name": "Add SS1",
+        "func": "var SS1  =  {\n    name:\"SS1 : Kurunegala\", \n    lat:7.486944, \n    lon:80.365045,\n    icon:\"tag\",\n    iconColor:\"dark\",\n    extrainfo:\"Hello ! this is station 1\"\n};\nmsg.payload = SS1;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 400,
+        "y": 540,
+        "wires": [
+            [
+                "ca5386f9.515f78"
+            ]
+        ]
+    },
+    {
+        "id": "73003f7b.72bc5",
+        "type": "worldmap in",
+        "z": "751072ed.24579c",
+        "name": "",
+        "path": "/worldmap",
+        "x": 100,
+        "y": 540,
+        "wires": [
+            [
+                "c0b1e07a.7b893"
+            ]
+        ]
+    },
+    {
+        "id": "c0b1e07a.7b893",
+        "type": "switch",
+        "z": "751072ed.24579c",
+        "name": "",
+        "property": "payload.action",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "connected",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 250,
+        "y": 540,
+        "wires": [
+            [
+                "f49183f2.f5de6"
+            ]
+        ]
+    },
+    {
+        "id": "ca5386f9.515f78",
+        "type": "worldmap",
+        "z": "751072ed.24579c",
+        "name": "",
+        "lat": "",
+        "lon": "",
+        "zoom": "",
+        "layer": "",
+        "cluster": "",
+        "maxage": "",
+        "usermenu": "show",
+        "layers": "show",
+        "panit": "false",
+        "panlock": "false",
+        "zoomlock": "false",
+        "path": "/worldmap",
+        "x": 560,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "cd4dbee1.d0a2d",
+        "type": "ui_group",
+        "z": "",
+        "name": "ON/OFF",
+        "tab": "2b6413f3.81bebc",
+        "disp": false,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "e9cb029.64a23",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "",
+        "broker": "test.mosquitto.org",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "2b6413f3.81bebc",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Station Status",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

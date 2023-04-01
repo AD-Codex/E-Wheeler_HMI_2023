@@ -1,0 +1,59 @@
+[
+    {
+        "id": "79dbed9.fcb3314",
+        "type": "tab",
+        "label": "Distance",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "f7e62dd7.6b36c",
+        "type": "function",
+        "z": "79dbed9.fcb3314",
+        "name": "",
+        "func": "function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {\n  var R = 6371; // Radius of the earth in km\n  var dLat = deg2rad(lat2-lat1);  // deg2rad below\n  var dLon = deg2rad(lon2-lon1); \n  var a = \n    Math.sin(dLat/2) * Math.sin(dLat/2) +\n    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * \n    Math.sin(dLon/2) * Math.sin(dLon/2)\n    ; \n  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); \n  var d = R * c; // Distance in km\n  return d;\n}\n\nfunction deg2rad(deg) {\n  return deg * (Math.PI/180)\n}\nmsg.payload = getDistanceFromLatLonInKm(7.486944,80.365045,7.473803,80.390385)\n//msg.payload = getDistanceFromLatLonInKm(0,0,0,0)\n   // lat:7.486944, \n   // lon:80.365045,\n   // lat:7.473803,\t\n  // lon:80.390385,\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 210,
+        "y": 300,
+        "wires": [
+            [
+                "b48810e9.9c11"
+            ]
+        ]
+    },
+    {
+        "id": "b48810e9.9c11",
+        "type": "debug",
+        "z": "79dbed9.fcb3314",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 350,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "22c65401.b7f41c",
+        "type": "inject",
+        "z": "79dbed9.fcb3314",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 90,
+        "y": 120,
+        "wires": [
+            [
+                "f7e62dd7.6b36c"
+            ]
+        ]
+    }
+]

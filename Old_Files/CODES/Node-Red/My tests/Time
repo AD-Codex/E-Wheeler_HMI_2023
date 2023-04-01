@@ -1,0 +1,85 @@
+[
+    {
+        "id": "52163eb4.9da7a",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "6ce12b6d.8d7704",
+        "type": "ui_template",
+        "z": "52163eb4.9da7a",
+        "group": "ab709f07.10b4c",
+        "name": "TopBar",
+        "order": 1,
+        "width": "1",
+        "height": "1",
+        "format": "<script>\n $(\"md-sidenav\").hide();\n $(\"md-toolbar button\").hide(); \n</script>\n<script id=\"clockScript1\" type=\"text/javascript\">\n var home = new Object();\n home.payload = 0;\n var prev = new Object();\n prev.payload = '-1';\n var next = new Object();\n next.payload = '+1';\n var language= new Object();\n language.payload = 'change';\n var theScope = scope;\n var clockInterval;\n $(function () {\n if (clockInterval) return;\n/*\n //add logo\n var div1 = $('<div/>');\n var logo = new Image();\n\n logo.src = '/wieland_logo.jpeg'\n logo.height = 45;\n div1[0].style.margin = '10px auto';\n\n div1.append(logo);\n*/\n //add clock\n var divDate = $('<div/>');\n var p = $('<p/>');\n\n divDate.append(p);\n divDate[0].style.margin = '5px';\n \n\n function displayTime() {\n var options = {weekday: 'short', year: '2-digit', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit'};\n p.text(new Date().toLocaleString(\"en-GB\", options));\n }\n \n clockInterval = setInterval(displayTime, 1000);\n\n // add Text\n var divTitle = $('<div title=\"Go to Main Screen\"/>');\n var t = document.createTextNode(\"Smart Home\"); // hier den Title eingeben\n divTitle.append(t)\n divTitle[0].style.margin = '40px auto';\n divTitle[0].style.size = '40';\n divTitle[0].addEventListener(\"click\", doIT.bind(null, home));\n \n // add button\n var divPrev = $('<div/>');\n var button1 = document.createElement(\"BUTTON\");\n var lab1 = document.createTextNode(\"Prev\")\n //var logo = new Image();\n //logo.src='/sprache.png';\n //logo.height=45;\n //button.appendChild(logo);\n button1.height=45;\n //button.left=50; \n button1.appendChild(lab1);\n button1.addEventListener(\"click\", doIT.bind(null, prev));\n divPrev.append(button1);\n \n var divNext = $('<div/>');\n var button2 = document.createElement(\"BUTTON\");\n var lab2 = document.createTextNode(\"Next\")\n //var logo = new Image();\n //logo.src='/sprache.png';\n //logo.height=45;\n //button.appendChild(logo);\n button2.height=45;\n //button.left=50; \n button2.appendChild(lab2);\n button2.addEventListener(\"click\", doIT.bind(null, next));\n divNext.append(button2);\n\n var div6 = $('<div/>');\n var button3 = document.createElement(\"BUTTON\");\n var lab3 = document.createTextNode(\"Main\")\n //var logo = new Image();\n //logo.src='/sprache.png';\n //logo.height=45;\n //button.appendChild(logo);\n button3.height=45;\n //button.left=50; \n button3.appendChild(lab3);\n button3.addEventListener(\"click\", doIT.bind(null, home));\n div6.append(button3);\n \n //var divNext =$('<div/>');\n //var taster = document.createElement(\"Button\");\n //var pic = new Image();\n //pic.src = \"/home.png\";\n //pic.height=45;\n //taster.appendChild(pic);\n //pic.addEventListener(\"click\", doThis.bind(null,language));\n //divNext.append(taster);\n \n //add to toolbar when it's available\n var addToToolbarTimer;\n \n function addToToolbar() {\n var toolbar = $('.md-toolbar-tools');\n \n if(!toolbar.length) return;\n //toolbar.append(divNext);\n  toolbar.append(divPrev);\n // toolbar.append(div6);\n toolbar.append(divTitle);\n //toolbar.append(div1);\n toolbar.append(divNext);\n toolbar.append(divDate)\n clearInterval(addToToolbarTimer);\n }\n addToToolbarTimer = setInterval(addToToolbar, 100);\n \n function doIT(m){\n theScope.send(m);\n }\n \n // function doThis(m){\n // theScope.send(m);\n // }\n });\n \n</script>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "templateScope": "local",
+        "x": 280,
+        "y": 180,
+        "wires": [
+            [
+                "8aaa8796.be3868"
+            ]
+        ]
+    },
+    {
+        "id": "8aaa8796.be3868",
+        "type": "debug",
+        "z": "52163eb4.9da7a",
+        "name": "topbar",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 530,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "4f9442f7.997e7c",
+        "type": "inject",
+        "z": "52163eb4.9da7a",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 100,
+        "y": 180,
+        "wires": [
+            [
+                "6ce12b6d.8d7704"
+            ]
+        ]
+    },
+    {
+        "id": "ab709f07.10b4c",
+        "type": "ui_group",
+        "z": "",
+        "name": "Map",
+        "tab": "65663d20.ddb014",
+        "order": 1,
+        "disp": true,
+        "width": "10",
+        "collapse": true
+    },
+    {
+        "id": "65663d20.ddb014",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Home",
+        "icon": "dashboard",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    }
+]

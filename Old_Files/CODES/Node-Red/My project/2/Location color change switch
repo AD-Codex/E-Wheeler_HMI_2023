@@ -1,0 +1,396 @@
+[
+    {
+        "id": "72b5a119.cca8a",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "d6a1111a.387b1",
+        "type": "ui_switch",
+        "z": "72b5a119.cca8a",
+        "name": "",
+        "label": "switch",
+        "tooltip": "",
+        "group": "5dfea3d9.7d09bc",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "decouple": "false",
+        "topic": "emspe3593/SS/status/SS1",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 70,
+        "y": 40,
+        "wires": [
+            [
+                "a6dc2b31.af70c8",
+                "5f121ea6.03851"
+            ]
+        ],
+        "outputLabels": [
+            "1"
+        ]
+    },
+    {
+        "id": "a6dc2b31.af70c8",
+        "type": "debug",
+        "z": "72b5a119.cca8a",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 210,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "70518ccc.f9f994",
+        "type": "debug",
+        "z": "72b5a119.cca8a",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 230,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "ea4c0462.6706e8",
+        "type": "debug",
+        "z": "72b5a119.cca8a",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 450,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "3138505f.2a054",
+        "type": "debug",
+        "z": "72b5a119.cca8a",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 230,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "5f121ea6.03851",
+        "type": "mqtt out",
+        "z": "72b5a119.cca8a",
+        "name": "pub",
+        "topic": "",
+        "qos": "0",
+        "retain": "",
+        "broker": "e62d40f1.a1cc8",
+        "x": 190,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "657f8222.11dbdc",
+        "type": "mqtt in",
+        "z": "72b5a119.cca8a",
+        "name": "sub",
+        "topic": "emspe3593/SS/+/SS1",
+        "qos": "0",
+        "broker": "e62d40f1.a1cc8",
+        "x": 70,
+        "y": 140,
+        "wires": [
+            [
+                "70518ccc.f9f994",
+                "957e6ed5.75f69"
+            ]
+        ]
+    },
+    {
+        "id": "83c4040e.036408",
+        "type": "worldmap",
+        "z": "72b5a119.cca8a",
+        "name": "",
+        "lat": "",
+        "lon": "",
+        "zoom": "11",
+        "layer": "OSM",
+        "cluster": "4",
+        "maxage": "",
+        "usermenu": "hide",
+        "layers": "hide",
+        "panit": "true",
+        "panlock": "false",
+        "path": "",
+        "x": 450,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "f492d89c.45f538",
+        "type": "function",
+        "z": "72b5a119.cca8a",
+        "name": "Add SS1",
+        "func": "var SS1 = global.get('SS1');//define global var for SS1\nSS1  =  {\n    name:\"SS1 : Kurunegala\", \n    lat:7.486944, \n    lon:80.365045,\n    icon:\"tag\",\n    iconColor:\"dark\",\n    extrainfo:\"Hello ! this is station 1\"\n};\n//msg.payload= SS1;\nglobal.set('SS1',SS1);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 260,
+        "y": 340,
+        "wires": [
+            [
+                "83c4040e.036408",
+                "e29a212e.2f80e"
+            ]
+        ]
+    },
+    {
+        "id": "957e6ed5.75f69",
+        "type": "switch",
+        "z": "72b5a119.cca8a",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "cont",
+                "v": "true",
+                "vt": "str"
+            },
+            {
+                "t": "cont",
+                "v": "false",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": true,
+        "outputs": 2,
+        "x": 210,
+        "y": 180,
+        "wires": [
+            [
+                "ea4c0462.6706e8",
+                "78df71b9.1fc4e"
+            ],
+            [
+                "3138505f.2a054",
+                "cf753cb4.e564b"
+            ]
+        ]
+    },
+    {
+        "id": "e29a212e.2f80e",
+        "type": "debug",
+        "z": "72b5a119.cca8a",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 450,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "78df71b9.1fc4e",
+        "type": "function",
+        "z": "72b5a119.cca8a",
+        "name": "ON",
+        "func": "var SS1 = global.get('SS1');\nvar list = Object.keys(SS1.iconColor=\"green\");\n//node.log(\"red works\");\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 430,
+        "y": 180,
+        "wires": [
+            [
+                "d656ca6e.084718",
+                "83c4040e.036408"
+            ]
+        ]
+    },
+    {
+        "id": "d656ca6e.084718",
+        "type": "debug",
+        "z": "72b5a119.cca8a",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 610,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "698b9a81.2b7064",
+        "type": "inject",
+        "z": "72b5a119.cca8a",
+        "name": "",
+        "topic": "",
+        "payload": "SS1",
+        "payloadType": "global",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 120,
+        "y": 340,
+        "wires": [
+            [
+                "f492d89c.45f538"
+            ]
+        ]
+    },
+    {
+        "id": "cf753cb4.e564b",
+        "type": "function",
+        "z": "72b5a119.cca8a",
+        "name": "OFF",
+        "func": "var SS1 = global.get('SS1');\nvar list = Object.keys(SS1.iconColor=\"red\");\n//node.log(\"red works\");\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 430,
+        "y": 220,
+        "wires": [
+            [
+                "a82d7842.51a948",
+                "83c4040e.036408"
+            ]
+        ]
+    },
+    {
+        "id": "a82d7842.51a948",
+        "type": "debug",
+        "z": "72b5a119.cca8a",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 610,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "c7cca944.996168",
+        "type": "inject",
+        "z": "72b5a119.cca8a",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "",
+        "x": 90,
+        "y": 460,
+        "wires": [
+            [
+                "132ee5fe.51100a"
+            ]
+        ]
+    },
+    {
+        "id": "e14bad09.53754",
+        "type": "ui_template",
+        "z": "72b5a119.cca8a",
+        "group": "5dfea3d9.7d09bc",
+        "name": "",
+        "order": 2,
+        "width": "6",
+        "height": "8",
+        "format": "<div ng-bind-html=\"msg.payload | trusted\"></div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "templateScope": "local",
+        "x": 440,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "132ee5fe.51100a",
+        "type": "template",
+        "z": "72b5a119.cca8a",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<iframe src=\"../worldmap\" height=450px width =500px ></iframe>",
+        "x": 240,
+        "y": 460,
+        "wires": [
+            [
+                "e14bad09.53754"
+            ]
+        ]
+    },
+    {
+        "id": "5dfea3d9.7d09bc",
+        "type": "ui_group",
+        "z": "",
+        "name": "ON/OFF",
+        "tab": "8a224921.f40138",
+        "disp": false,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "e62d40f1.a1cc8",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "",
+        "broker": "test.mosquitto.org",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "8a224921.f40138",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Station Status",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

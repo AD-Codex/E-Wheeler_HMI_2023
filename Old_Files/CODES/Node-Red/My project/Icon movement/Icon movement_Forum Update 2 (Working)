@@ -1,0 +1,214 @@
+[
+    {
+        "id": "350801b9.4cb68e",
+        "type": "tab",
+        "label": "Vehicle_1_Journey",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "4dc75014.991bb",
+        "type": "file in",
+        "z": "350801b9.4cb68e",
+        "name": "Vehicle1",
+        "filename": "/home/pi/Desktop/Project/Node-red/Vehicle1_Kurunegala-Malwapitiya.txt",
+        "format": "lines",
+        "chunk": false,
+        "sendError": false,
+        "x": 120,
+        "y": 140,
+        "wires": [
+            [
+                "babf7b79.da27b8",
+                "d5218ce2.253a6"
+            ]
+        ]
+    },
+    {
+        "id": "829ba260.8f2a4",
+        "type": "inject",
+        "z": "350801b9.4cb68e",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.1",
+        "x": 90,
+        "y": 60,
+        "wires": [
+            [
+                "4dc75014.991bb"
+            ]
+        ]
+    },
+    {
+        "id": "fb919470.528408",
+        "type": "debug",
+        "z": "350801b9.4cb68e",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 530,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "babf7b79.da27b8",
+        "type": "function",
+        "z": "350801b9.4cb68e",
+        "name": "Split > Update object",
+        "func": "var lat1 = msg.payload.split(',')[0];\n//node.warn(lon1)\nvar lon1= msg.payload.split(',')[1];\n//node.warn(lat1)\n\nvar lat = lat1;\nvar lon = lon1;\n\nvar v1 = {\n    lon:lon, \n    lat:lat,\n    name:\"Vehicle\", \n    icon:\"fa-car\"\n};\n\nmsg.payload= v1;\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 300,
+        "y": 60,
+        "wires": [
+            [
+                "8c98987b.ce3e58"
+            ]
+        ]
+    },
+    {
+        "id": "d5218ce2.253a6",
+        "type": "debug",
+        "z": "350801b9.4cb68e",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 250,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "1c4e7dfa.e44372",
+        "type": "worldmap",
+        "z": "350801b9.4cb68e",
+        "name": "",
+        "lat": "",
+        "lon": "",
+        "zoom": "15",
+        "layer": "OSM",
+        "cluster": "",
+        "maxage": "",
+        "usermenu": "show",
+        "layers": "show",
+        "panit": "true",
+        "panlock": "false",
+        "zoomlock": "false",
+        "path": "/worldmap",
+        "x": 520,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "8c98987b.ce3e58",
+        "type": "delay",
+        "z": "350801b9.4cb68e",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "2",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 440,
+        "y": 140,
+        "wires": [
+            [
+                "1c4e7dfa.e44372",
+                "fb919470.528408"
+            ]
+        ]
+    },
+    {
+        "id": "f883990d.f7ea48",
+        "type": "inject",
+        "z": "350801b9.4cb68e",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "3",
+        "x": 90,
+        "y": 260,
+        "wires": [
+            [
+                "d1f49673.5fe968"
+            ]
+        ]
+    },
+    {
+        "id": "ff8d8722.1f1a58",
+        "type": "ui_template",
+        "z": "350801b9.4cb68e",
+        "group": "2e092ffe.62021",
+        "name": "",
+        "order": 2,
+        "width": "10",
+        "height": "9",
+        "format": "<div ng-bind-html=\"msg.payload | trusted\"></div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "templateScope": "local",
+        "x": 420,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d1f49673.5fe968",
+        "type": "template",
+        "z": "350801b9.4cb68e",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<iframe src=\"../worldmap\" height=450px width =500px ></iframe>",
+        "x": 260,
+        "y": 260,
+        "wires": [
+            [
+                "ff8d8722.1f1a58"
+            ]
+        ]
+    },
+    {
+        "id": "2e092ffe.62021",
+        "type": "ui_group",
+        "z": "",
+        "name": "Group 1",
+        "tab": "87db8788.61a668",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "87db8788.61a668",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Test Path",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]

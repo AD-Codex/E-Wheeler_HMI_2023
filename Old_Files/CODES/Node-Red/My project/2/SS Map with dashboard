@@ -1,0 +1,256 @@
+[
+    {
+        "id": "f4354178.6fbf5",
+        "type": "tab",
+        "label": "SStation map ",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "f28ab0c6.6d4b",
+        "type": "worldmap",
+        "z": "f4354178.6fbf5",
+        "name": "",
+        "lat": "",
+        "lon": "",
+        "zoom": "11",
+        "layer": "OSM",
+        "cluster": "4",
+        "maxage": "",
+        "layers": "hide",
+        "panit": "true",
+        "panlock": "false",
+        "path": "",
+        "x": 510,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "3ec84e3e.608f42",
+        "type": "inject",
+        "z": "f4354178.6fbf5",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 70,
+        "y": 260,
+        "wires": [
+            [
+                "1d459f5a.3eb681",
+                "aa75b15f.4d266",
+                "cfaa90e7.f8c73",
+                "2f4b858c.a9a1da",
+                "64c384cc.f8b2dc",
+                "5e7b72ff.55115c"
+            ]
+        ]
+    },
+    {
+        "id": "1d459f5a.3eb681",
+        "type": "function",
+        "z": "f4354178.6fbf5",
+        "name": "Add SS1",
+        "func": "\nvar SS1 = {\n    name:\"SS1 : Kurunegala\", \n    lat:7.486944, \n    lon:80.365045,\n    icon:\"tag\",\n    iconColor:\"blue\",\n    extrainfo:\"Hello ! this is station 1\"\n};\nmsg.payload = SS1;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 240,
+        "y": 140,
+        "wires": [
+            [
+                "f28ab0c6.6d4b",
+                "70d151f1.c7879"
+            ]
+        ]
+    },
+    {
+        "id": "f12cc930.636528",
+        "type": "comment",
+        "z": "f4354178.6fbf5",
+        "name": "Swapping Stations Map [Default]",
+        "info": "Adds a map at http://(your-server-ip):1880/worldmap. \n\nThe `function` node creates an object with some basic properties required to add to a map.",
+        "x": 130,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "70d151f1.c7879",
+        "type": "debug",
+        "z": "f4354178.6fbf5",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 510,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "aa75b15f.4d266",
+        "type": "function",
+        "z": "f4354178.6fbf5",
+        "name": "Add SS2",
+        "func": "var SS2 = {\n    name:\"SS2 : Mallawapitiya\", \n    lat:7.473803,\t\n    lon:80.390385,\n    icon:\"tag\",\n    iconColor:\"blue\",\n    extrainfo:\"Hello ! this is station 2\"\n};\nmsg.payload = SS2;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 240,
+        "y": 200,
+        "wires": [
+            [
+                "f28ab0c6.6d4b",
+                "70d151f1.c7879"
+            ]
+        ]
+    },
+    {
+        "id": "cfaa90e7.f8c73",
+        "type": "function",
+        "z": "f4354178.6fbf5",
+        "name": "Add SS4",
+        "func": "var SS4 = {\n    name:\"SS4 : Mawatagama\", \n    lat:7.432725,\t\n    lon:80.446576,\n    icon:\"tag\",\n    iconColor:\"blue\",\n    extrainfo:\"Hello ! this is station 4\"\n};\n\t\n\n\nmsg.payload = SS4;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 240,
+        "y": 320,
+        "wires": [
+            [
+                "70d151f1.c7879",
+                "f28ab0c6.6d4b"
+            ]
+        ]
+    },
+    {
+        "id": "2f4b858c.a9a1da",
+        "type": "function",
+        "z": "f4354178.6fbf5",
+        "name": "Add SS3",
+        "func": "var SS3 = {\n    name:\"SS3 : Pilessa\", \n    lat:7.453491,\t\n    lon:80.418123,\n    icon:\"tag\",\n    iconColor:\"blue\",\n    extrainfo:\"Hello ! this is station 3\"\n};\n\t\n\n\nmsg.payload = SS3;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 240,
+        "y": 260,
+        "wires": [
+            [
+                "70d151f1.c7879",
+                "f28ab0c6.6d4b"
+            ]
+        ]
+    },
+    {
+        "id": "64c384cc.f8b2dc",
+        "type": "function",
+        "z": "f4354178.6fbf5",
+        "name": "Add SS5",
+        "func": "var SS5 = {\n    name:\"SS5 : Galagedara\", \n    lat:7.372298,\t\n    lon:80.526042,\n    icon:\"tag\",\n    iconColor:\"blue\",\n    extrainfo:\"Hello ! this is station 5\"\n};\n\t\n\n\nmsg.payload = SS5;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 240,
+        "y": 380,
+        "wires": [
+            [
+                "70d151f1.c7879",
+                "f28ab0c6.6d4b"
+            ]
+        ]
+    },
+    {
+        "id": "5e7b72ff.55115c",
+        "type": "function",
+        "z": "f4354178.6fbf5",
+        "name": "Add SS6",
+        "func": "var SS6 = {\n    name:\"SS6 : Barigama\", \n    lat:7.327693,\t\n    lon:80.577552,\n    icon:\"tag\",\n    iconColor:\"blue\",\n    extrainfo:\"Hello ! this is station 6\"\n};\n\t\nmsg.payload = SS6;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 240,
+        "y": 440,
+        "wires": [
+            [
+                "70d151f1.c7879",
+                "f28ab0c6.6d4b"
+            ]
+        ]
+    },
+    {
+        "id": "590c4c7.6f146b4",
+        "type": "inject",
+        "z": "f4354178.6fbf5",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "",
+        "x": 70,
+        "y": 500,
+        "wires": [
+            [
+                "e349fe93.a54f9"
+            ]
+        ]
+    },
+    {
+        "id": "9bc5f812.3a42e8",
+        "type": "ui_template",
+        "z": "f4354178.6fbf5",
+        "group": "ab709f07.10b4c",
+        "name": "",
+        "order": 0,
+        "width": "0",
+        "height": "0",
+        "format": "<div ng-bind-html=\"msg.payload | trusted\"></div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "templateScope": "local",
+        "x": 420,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e349fe93.a54f9",
+        "type": "template",
+        "z": "f4354178.6fbf5",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<iframe src=\"../worldmap\" height=450px width =500px ></iframe>",
+        "x": 240,
+        "y": 500,
+        "wires": [
+            [
+                "9bc5f812.3a42e8"
+            ]
+        ]
+    },
+    {
+        "id": "ab709f07.10b4c",
+        "type": "ui_group",
+        "z": "",
+        "name": "Map",
+        "tab": "65663d20.ddb014",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": true
+    },
+    {
+        "id": "65663d20.ddb014",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Home",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]

@@ -1,6 +1,5 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
-import sys
 from threading import Thread
 import numpy as np
 from numpy.linalg import inv
@@ -13,6 +12,7 @@ import re
 import RPi.GPIO as GPIO
 import smbus
 import math
+from sklearn.cluster import KMeans
 
 #inital port
 port = []
@@ -53,7 +53,7 @@ def pulse_event(channel):
     Tcount = Tcount +1
 
 GPIO.setup(interrupt_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.add_event_detect(interrupt_pin, GPIO.FALLING, callback=pulse_event, bouncetime=100)
+GPIO.add_event_detect(interrupt_pin, GPIO.RISING, callback=pulse_event, bouncetime=100)
 
 
 def WriteData():
@@ -61,12 +61,10 @@ def WriteData():
     global Tcount
     
     while True:
-        drive = Tcount * 2 * 3.14 * 0.22 * 0.001
+        drive = Tcount * 1.45 * 0.001
         publish.single("93/bms/velo",round(Speed),hostname = "localhost")
-        publish.single("93/bms/drive",round(drive, 2),hostname = "localhost")
-        publish.single( "93/bms/ang", round(ANG_READ), hostname = "localhost")
+        publish.single("93/bms/drive",drive,hostname = "localhost")
         timeDelay.sleep(1)
-        
                 
 
 
@@ -99,16 +97,19 @@ def SpeedRead():
     global lastCountTime
     global VELOCITY_READ
     
+    power_mgmt_1 = 0x6b
+    power_mgmt_2 = 0x6c
+    
     while True:
         CurrentTime = timeDelay.time()
     
-        if ((newCountTime - lastCountTime) > 0.01):
+        if ((newCountTime - lastCountTime) > 0.1):
             #print(newCountTime - lastCountTime)
             RPM = 60.00/(newCountTime - lastCountTime)
-            Speed = RPM*2*3.14*0.22*60*0.001
+            Speed = RPM*1.45*60*0.001
             lastCountTime = newCountTime
-            if ( (lastSpeed - Speed) > 20 ):
-                print("----------------------------error speed-----------------------------")
+            if ((Speed - lastSpeed) > 15 ):
+                print("----------------------------error-----------------------------")
                 Speed = lastSpeed
         elif ( (CurrentTime - lastCountTime) > zeroTimeout ):
             RPM = 0.0
@@ -126,143 +127,19 @@ def SpeedRead():
 
 
 
-'''
-power_mgmt_1 = 0x6b
-power_mgmt_2 = 0x6c
- 
-def read_byte(reg):
-    return bus.read_byte_data(address, reg)
- 
-def read_word(reg):
-    h = bus.read_byte_data(address, reg)
-    l = bus.read_byte_data(address, reg+1)
-    value = (h << 8) + l
-    return value
- 
-def read_word_2c(reg):
-    val = read_word(reg)
-    if (val >= 0x8000):
-        return -((65535 - val) + 1)
-    else:
-        return val
- 
-def dist(a,b):
-    return math.sqrt((a*a)+(b*b))
- 
-def get_y_rotation(x,y,z):
-    radians = math.atan2(x, dist(y,z))
-    return -math.degrees(radians)
- 
-def get_x_rotation(x,y,z):
-    radians = math.atan2(y, dist(x,z))
-    return math.degrees(radians)
- 
-bus = smbus.SMBus(1) # bus = smbus.SMBus(0) fuer Revision 1
-address = 0x68       # via i2cdetect
-# sudo i2cdetect -y 1
-# sudo i2cget -y 1 0x68 0x75
- 
-# Aktivieren, um das Modul ansprechen zu koennen
-bus.write_byte_data(address, power_mgmt_1, 0)
-
-def GyroRead():
-    global ANG_READ
-    
-    while True:
-        gyroskop_xout = read_word_2c(0x43)
-        gyroskop_yout = read_word_2c(0x45)
-        gyroskop_zout = read_word_2c(0x47)
-         
-        beschleunigung_xout = read_word_2c(0x3b)
-        beschleunigung_yout = read_word_2c(0x3d)
-        beschleunigung_zout = read_word_2c(0x3f)
-         
-        beschleunigung_xout_skaliert = beschleunigung_xout / 16384.0
-        beschleunigung_yout_skaliert = beschleunigung_yout / 16384.0
-        beschleunigung_zout_skaliert = beschleunigung_zout / 16384.0
-        
-        ANG_READ = get_x_rotation(beschleunigung_xout_skaliert, beschleunigung_yout_skaliert, beschleunigung_zout_skaliert)
-        #print "X Rotation: " , get_x_rotation(beschleunigung_xout_skaliert, beschleunigung_yout_skaliert, beschleunigung_zout_skaliert)
-        #print "Y Rotation: " , get_y_rotation(beschleunigung_xout_skaliert, beschleunigung_yout_skaliert, beschleunigung_zout_skaliert)
-        #print("---------------------------------------------------------------------")
-        #publish.single( "93/bms/ang", round(ANG_READ), hostname = "test.mosquitto.org")
-        timeDelay.sleep(0.5)
-'''
-
-
-class angle:
-    def __init_( self):
-        self.power_mgmt_1 = 0x6b
-        self.power_mgmt_2 = 0x6c
-        self.address = 0x68       # via i2cdetect
-        # sudo i2cdetect -y 1
-        # sudo i2cget -y 1 0x68 0x75
-        
-    def read_byte( self, reg):
-        return bus.read_byte_data(self.address, reg)
-     
-    def read_word( self, reg):
-        h = bus.read_byte_data(self.address, reg)
-        l = bus.read_byte_data(self.address, reg+1)
-        value = (h << 8) + l
-        return value
-     
-    def read_word_2c( self, reg):
-        val = self.read_word(reg)
-        if (val >= 0x8000):
-            return -((65535 - val) + 1)
-        else:
-            return val
-     
-    def dist( self, a, b):
-        return math.sqrt((a*a)+(b*b))
-     
-    def get_y_rotation( self, x, y, z):
-        radians = math.atan2(x, self.dist(y,z))
-        return -math.degrees(radians)
-     
-    def get_x_rotation( self, x, y, z):
-        radians = math.atan2(y, self.dist(x,z))
-        return math.degrees(radians)
-     
-    bus = smbus.SMBus(1) # bus = smbus.SMBus(0) fuer Revision 1
-     
-    # Aktivieren, um das Modul ansprechen zu koennen
-    bus.write_byte_data( 0x68, 0x6b, 0)
-
-    def GyroRead( self):
-        global ANG_READ
-        
-        while True:
-            gyroskop_xout = self.read_word_2c(0x43)
-            gyroskop_yout = self.read_word_2c(0x45)
-            gyroskop_zout = self.read_word_2c(0x47)
-             
-            beschleunigung_xout = self.read_word_2c(0x3b)
-            beschleunigung_yout = self.read_word_2c(0x3d)
-            beschleunigung_zout = self.read_word_2c(0x3f)
-             
-            beschleunigung_xout_skaliert = beschleunigung_xout / 16384.0
-            beschleunigung_yout_skaliert = beschleunigung_yout / 16384.0
-            beschleunigung_zout_skaliert = beschleunigung_zout / 16384.0
-            
-            ANG_READ = self.get_x_rotation(beschleunigung_xout_skaliert, beschleunigung_yout_skaliert, beschleunigung_zout_skaliert)
-            #print "X Rotation: " , self.get_x_rotation(beschleunigung_xout_skaliert, beschleunigung_yout_skaliert, beschleunigung_zout_skaliert)
-            #print "Y Rotation: " , self.get_y_rotation(beschleunigung_xout_skaliert, beschleunigung_yout_skaliert, beschleunigung_zout_skaliert)
-            #print("---------------------------------------------------------------------")
-            #publish.single( "93/bms/ang", round(ANG_READ), hostname = "test.mosquitto.org")
-            timeDelay.sleep(0.5)
-
-
-
 
 class thread0:
+    def __int__( self):
+        self.Dcount = 0
+        
     def dataRead( self):
         global VOLTAGE_READ
         global CURRENT_READ
         global TEMP_READ
         global ANG_READ
         global DISTANCE
+        
+        print("Strating read data")
         
         try:
             while True:
@@ -273,18 +150,23 @@ class thread0:
                         #print("Recived :", str(data))
                         value = str(data).split(";")
                         #print("")
-                        #print( "Recived data V:", value[0], "; I:", value[1], "; T:", value[2])
-        
+                        print( "Recived data V:", value[0], "; I:", value[1], "; T:", value[2])
+                        
                         VOLTAGE_READ = float(value[0])
                         CURRENT_READ = float(value[1])
                         TEMP_READ = float(value[2])
+                            
+                        #if ( float(value[0]) > 0 and float(value[1]) > 0 and float(value[2]) > 0):
+                        #    VOLTAGE_READ = float(value[0])
+                        #    CURRENT_READ = float(value[1])
+                        #    TEMP_READ = float(value[2])
 
-                        publish.single("93/bms/temp",TEMP_READ,hostname = "localhost")
         except:
-            print("------------------------ Arduino read error ---------------------")
+            print("------------------------------ reading error ----------------------------")
             self.dataRead()
+
             
-            
+
 
 
 class thread1:    
@@ -294,14 +176,15 @@ class thread1:
         self.I0 = 0
         self.Speed = 0
         self.SOC = 0
-        self.Capacity = 24
+        self.Capacity = 7236000 # 30 * 67 * 3600 J
         self.Power = 0
         self.P_avg = 0
         self.S_avg = 0
         self.P_list = []
         self.S_list = []
         self.count = -1
-        self.sTime = 5
+        self.samples = 0
+        self.sTime = 10
         self.text = "hello from thred1 "
         
 
@@ -312,8 +195,81 @@ class thread1:
         global DISTANCE
         global SOC_VALUE
         
-        S_data_file = open('S_file.txt', 'w')
-        P_data_file = open('P_file.txt', 'w')
+        velocity_input = 'S_file.txt'
+        power_input = 'P_file.txt'
+        
+        with open(velocity_input) as f:
+            Vvalues = f.readlines()
+            print("vel read")
+        f.close()
+        velocity = [ eval(x) for x in Vvalues]
+        
+        with open(power_input) as f:
+            Pvalues = f.readlines()
+            print("pow read")
+        f.close()
+        power = [ eval(x) for x in Pvalues]
+        '''
+        Vel_means=[]
+        count = 0
+        vel_sum  = 0.0
+        for i in range(len(velocity)):
+            if (count < 30):
+                vel_sum = vel_sum + velocity[i]
+            else:
+                vel_ave = vel_sum/30
+                Vel_means.append(vel_ave)
+                #print(vel_ave)
+                vel_sum = 0
+                count=0
+
+            count = count +1
+
+        Power_means=[]
+        count = 0
+        power_sum  = 0.0
+        for i in range(len(power)):
+            if (count < 30):
+                power_sum = power_sum + power[i]
+            else:
+                power_ave = power_sum/30
+                Power_means.append(power_ave)
+                power_sum = 0
+                count=0
+
+            count = count +1
+
+        '''    
+        #data = list(zip(Vel_means, Power_means))
+        data = list(zip(velocity, power))
+        kmeans = KMeans( n_clusters=5).fit(data)
+        
+        print( kmeans.cluster_centers_)
+        
+        if ( float(kmeans.cluster_centers_[0][0]) == 0.0 ) :
+            cluster_1 = 0
+        else:
+            cluster_1 = float(kmeans.cluster_centers_[0][1]) / float(kmeans.cluster_centers_[0][0])
+        
+        if ( float(kmeans.cluster_centers_[1][0]) == 0.0 ) :
+            cluster_1 = 0
+        else:
+            cluster_2 = float(kmeans.cluster_centers_[1][1]) / float(kmeans.cluster_centers_[1][0])
+
+        if ( float(kmeans.cluster_centers_[2][0]) == 0.0 ) :
+            cluster_1 = 0
+        else:
+            cluster_3 = float(kmeans.cluster_centers_[2][1]) / float(kmeans.cluster_centers_[2][0])
+        
+        if ( float(kmeans.cluster_centers_[3][0]) == 0.0 ) :
+            cluster_1 = 0
+        else:
+            cluster_4 = float(kmeans.cluster_centers_[3][1]) / float(kmeans.cluster_centers_[3][0])
+        
+        if ( float(kmeans.cluster_centers_[4][0]) == 0.0 ) :
+            cluster_1 = 0
+        else:
+            cluster_5 = float(kmeans.cluster_centers_[4][1]) / float(kmeans.cluster_centers_[4][0])
         
         while True:
             self.V0 = VOLTAGE_READ
@@ -351,29 +307,56 @@ class thread1:
                     
                 self.P_avg = P_sum/self.sTime
                 self.S_avg = S_sum/self.sTime
+                
+                #S_data_file = open('S_file.txt', 'a')
+                #P_data_file = open('P_file.txt', 'a')
+                #line = "%f\n" % (self.S_avg)
+                #S_data_file.write(line)
+                #line = "%f\n" % (self.P_avg)
+                #P_data_file.write(line)
+                
                 #print("P_avg:", self.P_avg)
                 #print("S_avg", self.S_avg)
                 
-                if ( self.P_avg <= 40 and self.S_avg <= 40):
-                    map_value = 0.234
-                elif ( self.P_avg <= 40 and self.S_avg > 40):
-                    map_value = 0.333
-                elif ( self.P_avg > 40 and self.S_avg <= 40):
-                    map_value = 0.433
-                elif ( self.P_avg > 40 and self.S_avg > 40):
-                    map_value = 0.533
+                a = kmeans.predict( [[self.S_avg, self.P_avg]])
+                #print(a)
+                #print(a[0])
+                if (a[0] == 0):
+                    map_value = cluster_1
+                elif (a[0] == 1):
+                    map_value = cluster_2
+                elif (a[0] == 2):
+                    map_value = cluster_3
+                elif (a[0] == 3):
+                    map_value = cluster_4
+                elif (a[0] == 4):
+                    map_value = cluster_5
+                    
+                print("map_value", map_value)
                 
-
-                distance = self.SOC*self.Capacity / (map_value*100)
+                if ( map_value == 0.0):
+                    distance = 0.0
+                else:
+                    distance = self.SOC*self.Capacity / (map_value*100)
+                print("distance can go:",distance)
                 if ( self.S_avg == 0.0) :
                     distance = 0.0
-                DISTANCE = distance
-                publish.single("93/bms/dis",round(distance, 2),hostname = "localhost")
-                #print("distance can go:", DISTANCE)
+                DISTANCE = distance * 0.001
+                publish.single("93/bms/dis",round(distance*0.001, 2),hostname = "localhost")
+                print("distance can go:", DISTANCE)
+                
+                P_data_file = open('D_file.txt', 'a')
+                line = "%f\n" % (DISTANCE)
+                P_data_file.write(line)
                 
                 del self.P_list[:]
                 del self.S_list[:]
                 self.count = -1
+                if ( self.samples == 50):
+                    self.run()
+                    self.samples = 0
+                self.samples = self.samples + 1
+                
                 
             timeDelay.sleep(1)
             
@@ -386,7 +369,7 @@ class thread2:
         #initial values assigned
         self.I0 = 0 #Input current
         self.soh = 0.8 
-        self.soc = 0.78 #Assumed full charged
+        self.soc = 0.92 #Assumed full charged
 
         self.time = []
         self.SOH = []
@@ -575,11 +558,11 @@ class thread2:
             SOC_VALUE = self.soc * 100
                 
             publish.single("93/bms/v1/soc",round(self.soc*100, 2),hostname = "localhost")
-            #print("SOC - PUBLISHED")
+            #print("SOC - PUBLISHED") hostname = test.mosquitto.org
             publish.single("93/bms/v1/soh",round(self.soh*100, 2),hostname = "localhost")
-            #print("SOH - PUBLISHED")
+            #print("SOH - PUBLISHED") hostname = test.mosquitto.org
             #print("Voltage:", V0, "Current:", I0,"SOC:", round(self.soc*100, 2), "; SOH:", round(self.soh*100, 2))
-            timeDelay.sleep(1)
+            timeDelay.sleep(0.5)
                 
                 
 
@@ -591,7 +574,7 @@ if __name__ == '__main__':
     try:
         port_name = "/dev/" + port[0]
         print(port_name)
-        #port_name = "/dev/ttyUSB0"
+        port_name = "/dev/ttyUSB0"
         ser = serial.Serial( port_name, 9600, timeout=1)
         ser.reset_input_buffer()
     except:
@@ -599,7 +582,6 @@ if __name__ == '__main__':
     
     t1 = Thread( target = SpeedRead)
     t2 = Thread( target = WriteData)
-    #t3 = Thread( target = GyroRead)
     
     
     Zero = thread0()
@@ -616,13 +598,9 @@ if __name__ == '__main__':
     FirstTread = Thread( target = First.run)
     FirstTread.start()
     
-    Ang_ = angle()
-    AngTread = Thread( target = Ang_.GyroRead)
-    AngTread.start()
-    
     t1.start()
     t2.start()
-    #t3.start()
+    
     
     
 

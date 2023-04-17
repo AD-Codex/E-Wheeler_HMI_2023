@@ -89,7 +89,7 @@ void loop() {
 //  R0 = "36";
   
   //sprintf(msg, "%s;%s;%s;","60.00","10.00","57");
-  sprintf(msg, "%s;%s;%s;",V0,I0,"57");
+  sprintf(msg, ";%s;%s;%s;",V0,I0,"57");
   Serial.println(msg);
 
 }

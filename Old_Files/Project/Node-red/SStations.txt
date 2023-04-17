@@ -1,0 +1,24 @@
+    name:"SS1 : Kurunegala", 
+    lat:7.486944, 
+    lon:80.365045,
+
+    name:"SS2 : Mallawapitiya", 
+    lat:7.473803,	
+    lon:80.390385,
+
+    name:"SS3 : Pilessa", 
+    lat:7.453491,	
+    lon:80.418123,
+  
+    name:"SS4 : Mawatagama", 
+    lat:7.432725,	
+    lon:80.446576,
+ 	
+    name:"SS5 : Galagedara", 
+    lat:7.372298,	
+    lon:80.526042,
+
+    name:"SS6 : Barigama", 
+    lat:7.327693,	
+    lon:80.577552,
+   

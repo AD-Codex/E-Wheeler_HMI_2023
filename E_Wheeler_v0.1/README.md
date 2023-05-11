@@ -6,5 +6,5 @@
 3. Speed Reading
 4. Drive Distance measuring
 5. Gyro Reading
-6. ML algorithm
+6. ML algorithm (K means)
 7. Node-Red UI

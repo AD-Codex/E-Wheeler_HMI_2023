@@ -10,7 +10,7 @@
 7. Node-Red UI
 
 ## Updates
-1. BLU connection with JK BMS
+1. BLE connection with JK BMS
 2. New tab with BMS data
 3. SOC and Temp read by BMS
 4. Voltage and Current by Serial

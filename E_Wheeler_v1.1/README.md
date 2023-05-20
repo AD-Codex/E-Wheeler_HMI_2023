@@ -13,7 +13,6 @@
 1. BLE connection with JK BMS
 2. New tab with BMS data
 3. SOC and Temp read by BMS
-4. Voltage and Current by Serial
 
 ![Screenshot from 2023-04-27 14-52-07](https://github.com/AD-Codex/E_Wheeler_UI_2023/assets/126350818/963e2a36-d20e-4065-9cd2-2e2b8410af22)
 

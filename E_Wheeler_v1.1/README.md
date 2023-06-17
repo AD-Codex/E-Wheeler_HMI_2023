@@ -14,8 +14,11 @@
 2. New tab with BMS data
 3. SOC and Temp read by BMS
 
-![Screenshot from 2023-04-27 14-52-07](https://github.com/AD-Codex/E_Wheeler_UI_2023/assets/126350818/963e2a36-d20e-4065-9cd2-2e2b8410af22)
+#
 
-![Screenshot from 2023-04-27 14-53-02](https://github.com/AD-Codex/E_Wheeler_UI_2023/assets/126350818/80ecb481-e88f-4390-820f-2b739d48931f)
+![Home_screen_2](https://github.com/AD-Codex/E_Wheeler_UI_2023/assets/126350818/92ef8e19-8e9e-4ae5-b72d-07151357a369)
 
-![Screenshot from 2023-04-27 14-53-30](https://github.com/AD-Codex/E_Wheeler_UI_2023/assets/126350818/4511ff4f-4c1d-4bb2-a41f-e21d29049e94)
+![More_details](https://github.com/AD-Codex/E_Wheeler_UI_2023/assets/126350818/91f2d760-0583-4b66-b984-589e60c567b3)
+
+![Location](https://github.com/AD-Codex/E_Wheeler_UI_2023/assets/126350818/c9e57f1a-579f-44da-9612-5cde17871916)
+

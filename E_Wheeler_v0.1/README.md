@@ -9,7 +9,8 @@
 6. ML algorithm (K means)
 7. Node-Red UI
 
+#
 
-![Screenshot from 2023-04-27 14-51-07](https://github.com/AD-Codex/E_Wheeler_UI_2023/assets/126350818/2517a38f-ecd7-4e07-9b27-6f5e2202415d)
+![2023-04-19-130035_800x480_scrot](https://github.com/AD-Codex/E_Wheeler_UI_2023/assets/126350818/992f1fe7-3322-4d2b-984d-ef23d3df6379)
 
-![Screenshot from 2023-04-27 14-53-02](https://github.com/AD-Codex/E_Wheeler_UI_2023/assets/126350818/8d073a93-b172-4ed2-8772-22f58c665acc)
+![2023-04-19-130210_800x480_scrot](https://github.com/AD-Codex/E_Wheeler_UI_2023/assets/126350818/b16f1be3-fb08-458f-a397-2ceaa30923be)

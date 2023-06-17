@@ -1,4 +1,4 @@
 # E Wheeler UI
 
 
-![Screenshot from 2023-04-27 14-52-07](https://github.com/AD-Codex/E_Wheeler_UI_2023/assets/126350818/de4501e9-6d34-4314-880b-965b91cb177b)
+![Home_screen_1](https://github.com/AD-Codex/E_Wheeler_UI_2023/assets/126350818/7d304250-2c87-4ffb-b0b5-a8af886b54b3)

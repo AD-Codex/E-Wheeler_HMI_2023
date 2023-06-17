@@ -20,5 +20,5 @@
 
 ![More_details](https://github.com/AD-Codex/E_Wheeler_UI_2023/assets/126350818/91f2d760-0583-4b66-b984-589e60c567b3)
 
-![Location](https://github.com/AD-Codex/E_Wheeler_UI_2023/assets/126350818/c9e57f1a-579f-44da-9612-5cde17871916)
+![BMS_data](https://github.com/AD-Codex/E_Wheeler_UI_2023/assets/126350818/79e6dc73-5180-4d68-8b10-13f4e567c5b0)
 

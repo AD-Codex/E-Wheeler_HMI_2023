@@ -4,6 +4,11 @@
 ![Home_screen_1](https://github.com/AD-Codex/E_Wheeler_UI_2023/assets/126350818/7d304250-2c87-4ffb-b0b5-a8af886b54b3)
 
 
+
+https://github.com/AD-Codex/E-Wheeler_HMI_2023/assets/126350818/2c326eb4-9c9d-4789-aec9-6d725d68ddd6
+
+
+
 Reference
 1. https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html
 2. https://github.com/jblance/mpp-solar
